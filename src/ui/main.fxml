@@ -7,8 +7,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="1300" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml">
-  <Button id="close" layoutX="1260.0" layoutY="14.0" mnemonicParsing="false" text="" />
-  <Button id="hide" layoutX="1230.0" layoutY="14.0" mnemonicParsing="false" text="" />
-  <Button id="settings" layoutX="1200.0" layoutY="14.0" mnemonicParsing="false" text="" />
+<AnchorPane id="AnchorPane" prefHeight="1300" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml" fx:controller="application.Controller">
+  <Button id="close" layoutX="1260.0" layoutY="7.0" mnemonicParsing="false" text="" onAction="#appExit"/>
+  <Button id="hide" layoutX="1230.0" layoutY="7.0" mnemonicParsing="false" text=""/>
+  <Button id="settings" layoutX="1200.0" layoutY="7.0" mnemonicParsing="false" text=""/>
 </AnchorPane>

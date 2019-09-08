@@ -1,12 +1,12 @@
-.button{
+.button {
 	-fx-background-color: transparent;
 }
 
-#AnchorPane{
-	-fx-background-color: #161616;
+#AnchorPane {
+	-fx-background-color:linear-gradient(from 100% 5% to 100% 10%, black, #0c0c0c);
 }
 
-#settings{
+#settings {
 	-fx-graphic: url("settings.png");
 }
 
@@ -20,6 +20,8 @@
 
 #settings:hover{
 	-fx-graphic: url("settingsHover.png");
+	-fx-scale-y: 1.05;
+	-fx-scale-x: 1.05;
 }
 
 #hide:hover {
@@ -28,4 +30,22 @@
 
 #close:hover {
 	-fx-graphic: url("closeHover.png");
+}
+
+#settings:pressed{
+	-fx-graphic: url("settings.png");
+	-fx-scale-y: 0.9;
+	-fx-scale-x: 0.9;
+}
+
+#hide:pressed {
+	-fx-graphic: url("hide.png");
+	-fx-scale-y: 0.9;
+	-fx-scale-x: 0.9;
+}
+
+#close:pressed {
+	-fx-graphic: url("close.png");
+	-fx-scale-y: 0.9;
+	-fx-scale-x: 0.9;
 }

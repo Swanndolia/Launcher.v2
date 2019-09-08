@@ -4,15 +4,19 @@ import java.io.IOException;
 import java.net.URL;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;public final class Main extends Application {
+import javafx.stage.StageStyle;
+
+public final class Main extends Application {
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -53,10 +57,8 @@ import javafx.stage.StageStyle;public final class Main extends Application {
 	        	}
 	        });
 	    } catch (IOException ex) {}
-	    
-
 	  }
-
+	  
 	  public static void main(String[] args) {
 	    launch(args);
 	  }
