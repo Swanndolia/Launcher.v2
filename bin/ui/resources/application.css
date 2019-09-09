@@ -1,30 +1,37 @@
 .button {
 	-fx-background-color: transparent;
+	-fx-skin: 'ui.animations.ButtonAnim';
 }
 
 #fields {
+	-fx-border-color: linear-gradient(to left, #780e4b, #82316e, #874e8f, #886aae, #8785c9, #7c83c7, #7082c5, #6480c2, #4c64a6, #35488b, #1d2e6f, #001655);
+	-fx-border-width: 0.85;
+    -fx-border-radius: 70 30 70 30;
+	-fx-skin: 'ui.animations.FieldAnim';
 	-fx-font: 15px verdana;
 	-fx-background-color: rgba(255, 255, 255, 0.05);
 	-fx-background-radius: 70 30 70 30;
+	-fx-text-fill: #4c64a6;
+    -fx-effect: dropshadow(gaussian, rgba(50, 0, 20, 0.5), 0, 0, 0, 1);
 }
 
 #fields:hover {
-	-fx-border-color: linear-gradient(to left, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+	-fx-skin: 'ui.animations.FieldAnim';
 	-fx-border-width: 1.5;
     -fx-border-radius: 70 30 70 30;
     -fx-border-insets: -2 -2 -2 -2;
-	-fx-font: 17px verdana;
     -fx-background-insets: -2 -2 -2 -2;
 	-fx-background-color: rgba(255, 255, 255, 0.15);
 	-fx-background-radius: 70 30 70 30;
 }
 
 #fields:focused {
-	-fx-border-color: linear-gradient(to left, #780e4b, #82316e, #874e8f, #886aae, #8785c9, #7c83c7, #7082c5, #6480c2, #4c64a6, #35488b, #1d2e6f, #001655);
+	-fx-skin: 'ui.animations.FieldAnim';
+	-fx-border-color: linear-gradient(to left, #c777b9, #ba83ca, #4c64a6, #4c64a6, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
     -fx-border-width: 1.5;
     -fx-border-radius: 70 30 70 30;
     -fx-border-insets: -2 -2 -2 -2;
-	-fx-font: 17px verdana;
+	-fx-font: 20px verdana;
 	-fx-background-insets: -2 -2 -2 -2;
 	-fx-background-color: rgba(255, 255, 255, 0.15);
 	-fx-background-radius: 70 30 70 30;
@@ -35,9 +42,18 @@
 	-fx-background-color: linear-gradient(to top left, #000000, #020001, #030002, #030004, #030006, #030007, #030009, #02000a, #04000a, #06000a, #08000a, #0a000a);
 }
 
+#headerPane {
+	-fx-background-radius: 70 30 0 0;
+}
+
 #newsPane {
 	-fx-background-radius: 45 45 45 45;
 	-fx-background-color: rgba(255, 255, 255, 0.05)
+}
+
+#footerPane {
+	-fx-background-radius: 0 0 70 30;
+	-fx-background-color: rgba(255, 255, 255, 0.02);
 }
 
 #settings {
@@ -52,6 +68,18 @@
 	-fx-graphic: url("close.png");
 }
 
+#login {
+	-fx-graphic: url("login.png");
+}
+
+#play {
+	-fx-graphic: url("play.png");
+}
+
+#logout {
+	-fx-graphic: url("logout.png");
+}
+
 #settings:hover{
 	-fx-graphic: url("settingsHover.png");
 }
@@ -64,20 +92,48 @@
 	-fx-graphic: url("closeHover.png");
 }
 
+#login:Hover {
+	-fx-graphic: url("loginHover.png");
+}
+
+#play:Hover {
+	-fx-graphic: url("playHover.png");
+}
+
+#logout:Hover {
+	-fx-graphic: url("logoutHover.png");
+}
+
 #settings:pressed{
-	-fx-graphic: url("settings.png");
 	-fx-scale-y: 0.9;
 	-fx-scale-x: 0.9;
 }
 
 #hide:pressed {
-	-fx-graphic: url("hide.png");
 	-fx-scale-y: 0.9;
 	-fx-scale-x: 0.9;
 }
 
 #close:pressed {
-	-fx-graphic: url("close.png");
 	-fx-scale-y: 0.9;
 	-fx-scale-x: 0.9;
+}
+
+#login:pressed {
+	-fx-scale-y: 0.9;
+	-fx-scale-x: 0.9;
+}
+
+#play:pressed {
+	-fx-scale-y: 0.9;
+	-fx-scale-x: 0.9;
+}
+
+#logout:pressed {
+	-fx-scale-y: 0.9;
+	-fx-scale-x: 0.9;
+}
+
+#keepLogin {
+	-fx-graphic: url("box.png");
 }

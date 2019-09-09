@@ -22,13 +22,13 @@ public final class Main extends Application {
     
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-	   	URL url = getClass().getResource("/ui/main.fxml");
+	   	URL url = getClass().getResource("/ui/resources/main.fxml");
 	   	FXMLLoader fxmlLoader = new FXMLLoader(url);
 	   	AnchorPane root = (AnchorPane) fxmlLoader.load();
 	    final Scene scene = new Scene(root, 1300, 700);
 	    stage = primaryStage;
 	    stage.setScene(scene);
-	    scene.getStylesheets().add("/ui/application.css");
+	    scene.getStylesheets().add("/ui/resources/application.css");
 	    scene.setFill(Color.TRANSPARENT);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setTitle("azurpixel v4");
