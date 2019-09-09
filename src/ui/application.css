@@ -2,8 +2,14 @@
 	-fx-background-color: transparent;
 }
 
+#fields {
+	-fx-opacity: 0.2;
+}
+
+
 #AnchorPane {
-	-fx-background-color:linear-gradient(from 100% 5% to 100% 10%, black, #0c0c0c);
+
+	-fx-background-color: linear-gradient(to bottom, #000000, #020001, #030002, #030004, #030006, #030007, #030009, #02000a, #04000a, #06000a, #08000a, #0a000a);
 }
 
 #settings {
@@ -20,8 +26,6 @@
 
 #settings:hover{
 	-fx-graphic: url("settingsHover.png");
-	-fx-scale-y: 1.05;
-	-fx-scale-x: 1.05;
 }
 
 #hide:hover {
