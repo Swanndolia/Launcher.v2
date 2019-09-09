@@ -7,14 +7,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="1300" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml" fx:controller="application.Controller">
-  <Button id="close" layoutX="1260.0" layoutY="7.0" mnemonicParsing="false" text="" onAction="#appExit"/>
-  <Button id="hide" layoutX="1230.0" layoutY="7.0" mnemonicParsing="false" text="" onAction="#appMinimize"/>
-  <Button id="settings" layoutX="1200.0" layoutY="7.0" mnemonicParsing="false" text="" onAction="#openSettings"/>
+<AnchorPane id="anchorPane" prefHeight="700" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="application.Controller">
 
-  <TextField fx:id="nameField" id="fields" prefHeight="40" prefWidth="350" layoutX="100" layoutY="50.0" />
-  <PasswordField fx:id="passField" id="fields" prefHeight="40" prefWidth="350" layoutX="100" layoutY="100.0" />
+<AnchorPane id="newsPane" prefHeight="500" prefWidth="700.0" layoutX="500" layoutY="100">
+ 
+</AnchorPane>
 
-  <Button fx:id="loginButton" id="settings" layoutX="100" layoutY="150" text="" onAction="#login"/>
+  <Button id="close" layoutX="1255.0" layoutY="2.0" mnemonicParsing="false" text="" onAction="#appExit"/>
+  <Button id="hide" layoutX="1225.0" layoutY="2.0" mnemonicParsing="false" text="" onAction="#appMinimize"/>
+  <Button id="settings" layoutX="1195.0" layoutY="2.0" mnemonicParsing="false" text="" onAction="#openSettings"/>
+
+  <TextField fx:id="nameField" id="fields" prefHeight="40" prefWidth="350" layoutX="100" layoutY="100.0" />
+  <PasswordField fx:id="passField" id="fields" prefHeight="40" prefWidth="350" layoutX="100" layoutY="150.0" />
+
+  <Button fx:id="loginButton" id="settings" layoutX="100" layoutY="200" text="" onAction="#login"/>
     
 </AnchorPane>

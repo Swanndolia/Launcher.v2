@@ -3,13 +3,18 @@
 }
 
 #fields {
-	-fx-opacity: 0.2;
+	-fx-background-color: rgba(255, 255, 255, 0.03)
 }
 
 
-#AnchorPane {
-
+#anchorPane {
+	-fx-background-radius: 70 30 70 30;
 	-fx-background-color: linear-gradient(to bottom, #000000, #020001, #030002, #030004, #030006, #030007, #030009, #02000a, #04000a, #06000a, #08000a, #0a000a);
+}
+
+#newsPane {
+	-fx-background-radius: 45 45 45 45;
+	-fx-background-color: rgba(255, 255, 255, 0.02)
 }
 
 #settings {

@@ -1,5 +1,6 @@
 package application;
 
+import fr.theshark34.openauth.AuthenticationException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -41,15 +42,17 @@ public class Controller
     @FXML
 	 protected void login(ActionEvent event) {
 	        Window owner = loginButton.getScene().getWindow();
-	        if(nameField.getText().isEmpty()) {
-	            showAlert(Alert.AlertType.ERROR, owner, "Invalid Fields", "Enter your mojang email or an username for normal auth");
+	        if (nameField.getText().isEmpty()) {
+	            showAlert(Alert.AlertType.ERROR, owner, "Invalid Fields", "Enter your mojang email or just an username if you don't have mojang account auth");
 	            return;
 	        }
 	        
-	        if(passField.getText().isEmpty())
-	        	System.out.print("not premium");
-	        
-	        showAlert(Alert.AlertType.CONFIRMATION, owner, "Login Succes",  "Welcome " + nameField.getText());
+	        try {
+				Auth.tryAuth(nameField.getText(), passField.getText());
+		        showAlert(Alert.AlertType.CONFIRMATION, owner, "Login Succes",  "Welcome " + Auth.getName());
+			} catch (AuthenticationException e) {
+		        showAlert(Alert.AlertType.CONFIRMATION, owner, "Login Error",  "Incorrect mail or password, just type an username if you don't have mojang account");
+			}
 	    }
     
     public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
