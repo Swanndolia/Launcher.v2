@@ -82,27 +82,27 @@
 }
 
 #settings:hover{
-	-fx-graphic: url("settingshover.png");
+	-fx-graphic: url("settingsHover.png");
 }
 
 #hide:hover {
-	-fx-graphic: url("hidehover.png");
+	-fx-graphic: url("hideHover.png");
 }
 
 #close:hover {
-	-fx-graphic: url("closehover.png");
+	-fx-graphic: url("closeHover.png");
 }
 
 #login:hover {
-	-fx-graphic: url("loginhover.png");
+	-fx-graphic: url("loginHover.png");
 }
 
 #play:hover {
-	-fx-graphic: url("playhover.png");
+	-fx-graphic: url("playHover.png");
 }
 
 #logout:hover {
-	-fx-graphic: url("logouthover.png");
+	-fx-graphic: url("logoutHover.png");
 }
 
 #settings:pressed{

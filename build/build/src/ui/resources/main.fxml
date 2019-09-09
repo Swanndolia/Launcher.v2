@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.StackPane?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+
+<AnchorPane id="anchorPane" prefHeight="700" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="application.Controller">
+
+<AnchorPane fx:id="headerPane" id="headerPane" prefHeight="70" prefWidth="1300">
+  <Button id="close" layoutX="1255.0" layoutY="2.0" mnemonicParsing="false" text="" onAction="#appExit"/>
+  <Button id="hide" layoutX="1225.0" layoutY="2.0" mnemonicParsing="false" text="" onAction="#appMinimize"/>
+  <Button id="settings" layoutX="1195.0" layoutY="2.0" mnemonicParsing="false" text="" onAction="#openSettings"/>
+</AnchorPane>
+
+  <TextField fx:id="nameField" id="fields" prefHeight="40" prefWidth="350" layoutX="60" layoutY="100.0" />
+  <PasswordField fx:id="passField" id="fields" prefHeight="40" prefWidth="350" layoutX="60" layoutY="150.0" />
+  <Button fx:id="loginButton" id="login" layoutX="50" layoutY="200" text="" onAction="#login"/>
+  <Button fx:id="playButton" id="play" layoutX="50" layoutY="200" text="" onAction="#play" visible="false"/>
+  <Button fx:id="keepLogin" id="box" layoutX="125" layoutY="215" onAction="#keepLogin" />
+  <Button fx:id="keepLoginCheck" id="boxChecked" layoutX="125" layoutY="215" onAction="#keepLogin" visible="false"/>
+  <Button fx:id="keepLoginLabel" id="keepLoginLabel" layoutX="180" layoutY="220" text="Stay Log-in"/>
+  <Button fx:id="logoutButton" id="logout" layoutX="250" layoutY="200" text="" onAction="#logout" visible="false" />
+
+<ImageView fx:id="imageView" layoutX="420" layoutY="85" fitHeight="120" fitWidth="120" pickOnBounds="true" preserveRatio="true">
+  <Image fx:id="skin" url="@skin.png"/>
+</ImageView>
+
+<AnchorPane fx:id="newsPane" id="newsPane" prefHeight="500" prefWidth="700.0" layoutX="550" layoutY="100" >
+
+</AnchorPane>
+
+<AnchorPane fx:id="settingsPane" id="settingsPane" prefHeight="500" prefWidth="700.0" layoutX="550" layoutY="100" visible="false">
+ 
+</AnchorPane>
+
+<AnchorPane fx:id="footerPane" id="footerPane" prefHeight="70" prefWidth="1300" layoutY="630" >
+ 
+</AnchorPane>
+
+</AnchorPane>
