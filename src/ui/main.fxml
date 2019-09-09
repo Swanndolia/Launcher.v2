@@ -6,10 +6,16 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 
 <AnchorPane id="anchorPane" prefHeight="700" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="application.Controller">
 
-<AnchorPane id="newsPane" prefHeight="500" prefWidth="700.0" layoutX="500" layoutY="100">
+<AnchorPane fx:id="newsPane" id="newsPane" prefHeight="500" prefWidth="700.0" layoutX="550" layoutY="100" >
+ 
+</AnchorPane>
+
+<AnchorPane fx:id="settingsPane" id="settingsPane" prefHeight="500" prefWidth="700.0" layoutX="550" layoutY="100" visible="false">
  
 </AnchorPane>
 
@@ -17,9 +23,14 @@
   <Button id="hide" layoutX="1225.0" layoutY="2.0" mnemonicParsing="false" text="" onAction="#appMinimize"/>
   <Button id="settings" layoutX="1195.0" layoutY="2.0" mnemonicParsing="false" text="" onAction="#openSettings"/>
 
-  <TextField fx:id="nameField" id="fields" prefHeight="40" prefWidth="350" layoutX="100" layoutY="100.0" />
-  <PasswordField fx:id="passField" id="fields" prefHeight="40" prefWidth="350" layoutX="100" layoutY="150.0" />
+  <TextField fx:id="nameField" id="fields" prefHeight="40" prefWidth="350" layoutX="60" layoutY="100.0" />
+  <PasswordField fx:id="passField" id="fields" prefHeight="40" prefWidth="350" layoutX="60" layoutY="150.0" />
 
   <Button fx:id="loginButton" id="settings" layoutX="100" layoutY="200" text="" onAction="#login"/>
-    
+
+<ImageView fx:id="imageView" layoutX="420" layoutY="85" fitHeight="120" fitWidth="120" pickOnBounds="true" preserveRatio="true">
+    <Image fx:id="skin" url="@skin.png"/>
+</ImageView>
+
+
 </AnchorPane>

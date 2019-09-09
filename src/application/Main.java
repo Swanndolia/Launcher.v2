@@ -34,7 +34,6 @@ public final class Main extends Application {
         stage.setTitle("azurpixel v4");
         stage.setScene(scene);
         stage.show();
-     
         //mover
         root.setOnMousePressed(new EventHandler<MouseEvent>() {
         	@Override
