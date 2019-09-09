@@ -21,11 +21,13 @@
   <PasswordField fx:id="passField" id="fields" prefHeight="40" prefWidth="350" layoutX="60" layoutY="150.0" />
   <Button fx:id="loginButton" id="login" layoutX="50" layoutY="200" text="" onAction="#login"/>
   <Button fx:id="playButton" id="play" layoutX="50" layoutY="200" text="" onAction="#play" visible="false"/>
-  <CheckBox fx:id="keepLogin" id="keepLogin" layoutX="125" layoutY="225" text="Stay Connected"/>
+  <Button fx:id="keepLogin" id="box" layoutX="125" layoutY="215" onAction="#keepLogin" />
+  <Button fx:id="keepLoginCheck" id="boxChecked" layoutX="125" layoutY="215" onAction="#keepLogin" visible="false"/>
+  <Button fx:id="keepLoginLabel" id="keepLoginLabel" layoutX="180" layoutY="220" text="Stay Log-in"/>
   <Button fx:id="logoutButton" id="logout" layoutX="250" layoutY="200" text="" onAction="#logout" visible="false" />
 
 <ImageView fx:id="imageView" layoutX="420" layoutY="85" fitHeight="120" fitWidth="120" pickOnBounds="true" preserveRatio="true">
-    <Image fx:id="skin" url="@skin.png"/>
+  <Image fx:id="skin" url="@skin.png"/>
 </ImageView>
 
 <AnchorPane fx:id="newsPane" id="newsPane" prefHeight="500" prefWidth="700.0" layoutX="550" layoutY="100" >

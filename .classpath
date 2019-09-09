@@ -6,6 +6,6 @@
 	<classpathentry kind="lib" path="C:/Users/Administrator/Desktop/azurpixel/java-discord-rpc-2.0.1-all.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Administrator/Desktop/azurpixel/openauth-1.0.3-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Administrator/Desktop/azurpixel/openlauncherlib-3.0.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Administrator/Desktop/azurpixel/s-update-3.1.0-BETA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Administrator/Desktop/azurpixel/gson-2.8.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

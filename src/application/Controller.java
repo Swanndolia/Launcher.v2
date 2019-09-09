@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -18,6 +17,8 @@ import javafx.stage.Window;
 
 public class Controller 
 {
+	
+	private Window owner;
 	
     @FXML
     private TextField nameField;
@@ -29,7 +30,10 @@ public class Controller
     private Button loginButton;
     
     @FXML
-    private CheckBox keepLogin;
+    private Button keepLogin;
+    
+    @FXML
+    private Button keepLoginCheck;
     
     @FXML
     private Button logoutButton;
@@ -61,9 +65,9 @@ public class Controller
 		System.exit(0);
 	}
 
-    @FXML
+	@FXML
 	 protected void login(ActionEvent event) {
-    	Window owner = loginButton.getScene().getWindow();
+
 	    if (nameField.getText().isEmpty()) 
 	        Alerts.showAlert(Alert.AlertType.ERROR, owner, "Invalid Fields", "Enter your mojang email or just an username if you don't have mojang account auth");
 	    else {
@@ -82,26 +86,43 @@ public class Controller
 	    }
 	}
     
-    @FXML
-    protected void logout() throws AuthenticationException {
-		Auth.tryAuth("", "Disconnect me");
-    }
-    
-    @FXML
-	 protected void play(ActionEvent event) {
-
+	@FXML
+	private void play(ActionEvent event) {
+		keepLogin(event);
 	}
-    
+   
+    @FXML
+	private void keepLogin(ActionEvent event) {
+    	if (keepLoginCheck.isVisible()) {
+    		keepLoginCheck.setVisible(false);
+    		keepLogin.setVisible(true);
+    	}
+    	else {
+    		keepLoginCheck.setVisible(true);
+			keepLogin.setVisible(false);
+    	}
+   }
+   
     public void loadSkin() throws MalformedURLException, IOException {
-		skin = new Image(new URL("https://mc-heads.net/head/" + Auth.getName() + "/120").openStream());
+	    skin = new Image(new URL("https://mc-heads.net/head/" + Auth.getName() + "/120").openStream());
 		imageView.setImage(skin);
     }
-    
+   
     public void switchElementsState(boolean loged) {
     	playButton.setVisible(loged);
     	logoutButton.setVisible(loged);
     	loginButton.setVisible(!loged);
     	nameField.setEditable(!loged);
     	passField.setEditable(!loged);
+    }
+	
+	@FXML
+    protected void logout() throws AuthenticationException {
+		Auth.tryAuth("", "Disconnect me");
+		Alerts.showAlert(Alert.AlertType.CONFIRMATION, owner, "Login Error",  "Successfull Logout");
+		switchElementsState(false);
+		skin = new Image("/ui/resources/skin.png");
+		imageView.setImage(skin);
+		
     }
 }

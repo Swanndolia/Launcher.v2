@@ -3,6 +3,9 @@ package application;
 import java.io.IOException;
 import java.net.URL;
 
+import club.minnced.discord.rpc.DiscordEventHandlers;
+import club.minnced.discord.rpc.DiscordRPC;
+import club.minnced.discord.rpc.DiscordRichPresence;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +22,8 @@ public final class Main extends Application {
     private double yOffset = 0;
 	
     public static Stage stage;
+	public static DiscordRichPresence presence = new DiscordRichPresence();
+    private static DiscordRPC lib = DiscordRPC.INSTANCE;
     
 	@Override
 	public void start(Stage primaryStage) throws IOException {
@@ -52,6 +57,33 @@ public final class Main extends Application {
 	  }
 
 	  public static void main(String[] args) {
-	    launch(args);
+		    String applicationId = "617320590570815498";
+		    String steamId = "";
+		    DiscordEventHandlers handlers = new DiscordEventHandlers();
+		    lib.Discord_Initialize(applicationId, handlers, true, steamId);
+		    presence.startTimestamp = System.currentTimeMillis() / 1000; // epoch second
+		    presence.details = "Viens de lancer le launcher";
+		    presence.state = "Azurpixel / Saber LLC";
+		    presence.largeImageKey = "icone";
+		    presence.largeImageText = "azurpixel.net";
+		    updatePresence();
+		  launch(args);
 	  }
+	  
+		public static void updatePresence() {
+		    lib.Discord_UpdatePresence(presence);
+			Thread t = new Thread(() -> {
+				while (!Thread.currentThread().isInterrupted()) {
+					lib.Discord_RunCallbacks();
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						lib.Discord_Shutdown();
+						break;
+					}
+				}
+			}, "RPC-Callback-Handler");
+			t.start();
+		}
+	  
 	}

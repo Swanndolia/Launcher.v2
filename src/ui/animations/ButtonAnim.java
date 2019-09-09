@@ -4,7 +4,6 @@ import com.sun.javafx.scene.control.skin.ButtonSkin;
 
 import javafx.animation.FadeTransition;
 import javafx.scene.control.Button;
-import javafx.scene.effect.Bloom;
 import javafx.util.Duration;
 
 @SuppressWarnings("restriction")

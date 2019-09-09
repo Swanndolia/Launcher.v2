@@ -12,7 +12,7 @@
 	-fx-background-color: rgba(255, 255, 255, 0.05);
 	-fx-background-radius: 70 30 70 30;
 	-fx-text-fill: #4c64a6;
-    -fx-effect: dropshadow(gaussian, rgba(50, 0, 20, 0.5), 0, 0, 0, 1);
+    -fx-effect: dropshadow(gaussian, rgba(50, 0, 20, 0.5), 0, 0, 1, 1);
 }
 
 #fields:hover {
@@ -44,6 +44,7 @@
 
 #headerPane {
 	-fx-background-radius: 70 30 0 0;
+	-fx-opacity: 100;
 }
 
 #newsPane {
@@ -81,27 +82,27 @@
 }
 
 #settings:hover{
-	-fx-graphic: url("settingsHover.png");
+	-fx-graphic: url("settingshover.png");
 }
 
 #hide:hover {
-	-fx-graphic: url("hideHover.png");
+	-fx-graphic: url("hidehover.png");
 }
 
 #close:hover {
-	-fx-graphic: url("closeHover.png");
+	-fx-graphic: url("closehover.png");
 }
 
-#login:Hover {
-	-fx-graphic: url("loginHover.png");
+#login:hover {
+	-fx-graphic: url("loginhover.png");
 }
 
-#play:Hover {
-	-fx-graphic: url("playHover.png");
+#play:hover {
+	-fx-graphic: url("playhover.png");
 }
 
-#logout:Hover {
-	-fx-graphic: url("logoutHover.png");
+#logout:hover {
+	-fx-graphic: url("logouthover.png");
 }
 
 #settings:pressed{
@@ -134,6 +135,9 @@
 	-fx-scale-x: 0.9;
 }
 
-#keepLogin {
+#box {
 	-fx-graphic: url("box.png");
+}
+#boxChecked {
+	-fx-graphic: url("boxChecked.png");
 }
