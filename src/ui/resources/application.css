@@ -31,7 +31,7 @@
     -fx-border-width: 1.5;
     -fx-border-radius: 70 30 70 30;
     -fx-border-insets: -2 -2 -2 -2;
-	-fx-font: 20px verdana;
+	-fx-font: 16px verdana;
 	-fx-background-insets: -2 -2 -2 -2;
 	-fx-background-color: rgba(255, 255, 255, 0.15);
 	-fx-background-radius: 70 30 70 30;
@@ -42,19 +42,45 @@
 	-fx-background-color: linear-gradient(to top left, #000000, #020001, #030002, #030004, #030006, #030007, #030009, #02000a, #04000a, #06000a, #08000a, #0a000a);
 }
 
-#headerPane {
-	-fx-background-radius: 70 30 0 0;
-	-fx-opacity: 100;
+#newsPane {
+	-fx-background-radius: 0 0 45 45;
+	-fx-background-color: rgba(200, 200, 200, 0.025);
+	-fx-border-radius: 0 0 45 45;
+	-fx-border-color: linear-gradient(to bottom left, #780e4b, #82316e, #874e8f, #886aae, #8785c9, #7c83c7, #7082c5, #6480c2, #4c64a6, #35488b, #1d2e6f, #001655);
+    -fx-border-width: 0.4;
 }
 
-#newsPane {
+#newsPane:hover {
+	-fx-background-radius: 0 0 45 45;
+	-fx-background-color: rgba(200, 200, 200, 0.03);
+	-fx-effect: dropshadow(gaussian, rgba(50, 0, 20, 0.5), 0, 0, 1, 1);
+}
+
+#navPane {
+	-fx-background-radius: 45 45 0 0;
+	-fx-border-radius: 45 45 0 0;
+	-fx-background-color: rgba(200, 200, 200, 0.03);
+	-fx-border-color: linear-gradient(to bottom left, #780e4b, #82316e, #874e8f, #886aae, #8785c9, #7c83c7, #7082c5, #6480c2, #4c64a6, #35488b, #1d2e6f, #001655);
+    -fx-border-width: 0.4;
+}
+
+#settingsPane {
+	-fx-border-radius: 45 45 45 45;
 	-fx-background-radius: 45 45 45 45;
-	-fx-background-color: rgba(255, 255, 255, 0.05)
+	-fx-background-color: rgba(200, 200, 200, 0.025);
+	-fx-border-color: linear-gradient(to bottom left, #780e4b, #82316e, #874e8f, #886aae, #8785c9, #7c83c7, #7082c5, #6480c2, #4c64a6, #35488b, #1d2e6f, #001655);
+    -fx-border-width: 0.2;
+}
+
+#settingsPane:hover {
+	-fx-background-radius: 45 45 45 45;
+	-fx-background-color: rgba(200, 200, 200, 0.03);
+	-fx-effect: dropshadow(gaussian, rgba(0, 0, 100, 0.5), 0, 0, 1, 1);
 }
 
 #footerPane {
 	-fx-background-radius: 0 0 70 30;
-	-fx-background-color: rgba(255, 255, 255, 0.02);
+	-fx-background-color: rgba(255, 255, 255, 0.04);
 }
 
 #settings {

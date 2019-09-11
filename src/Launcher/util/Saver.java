@@ -1,4 +1,4 @@
-package utils;
+package Launcher.util;
 
 import java.io.BufferedWriter;
 import java.io.File;

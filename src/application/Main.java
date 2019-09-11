@@ -43,6 +43,7 @@ public class Main extends Application {
         root.setOnMousePressed(new EventHandler<MouseEvent>() {
         	@Override
         	public void handle(MouseEvent event) {
+        		root.requestFocus();
         		xOffset = event.getSceneX();
         		yOffset = event.getSceneY();
         	}

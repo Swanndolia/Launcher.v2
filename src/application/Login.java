@@ -1,18 +1,18 @@
 package application;
 
-import fr.theshark34.openauth.AuthPoints;
-import fr.theshark34.openauth.AuthenticationException;
-import fr.theshark34.openauth.Authenticator;
-import fr.theshark34.openauth.model.AuthAgent;
-import fr.theshark34.openauth.model.response.AuthResponse;
-import re.alwyn974.openlauncherlib.minecraft.AuthInfos;
+import Launcher.minecraft.AuthInfos;
+import openauth.AuthPoints;
+import openauth.AuthenticationException;
+import openauth.Authenticator;
+import openauth.model.AuthAgent;
+import openauth.model.response.AuthResponse;
 
-public class Auth {
+public class Login {
 	
 	public static AuthInfos authInfos;
 	private static String name;
 	
-	public static void tryAuth(String user, String pass) throws AuthenticationException {
+	public static void tryLogin(String user, String pass) throws AuthenticationException {
 		if(user.length() == 0 && pass.equals("Disconnect me")) {
 			authInfos = new AuthInfos("", "", "");
 			name = user;
@@ -30,5 +30,9 @@ public class Auth {
 	
 	public static String getName() {
 		return name;
+	}
+
+	public static AuthInfos getAuthInfos() {
+		return authInfos;
 	}
 }
