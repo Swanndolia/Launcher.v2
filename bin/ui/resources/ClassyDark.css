@@ -17,7 +17,7 @@
     -fx-background-color: transparent;
     -fx-border-color: linear-gradient(to left, #c777b9, #ba83ca, #4c64a6, #4c64a6, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
     -fx-border-width: 1;
-    -fx-border-radius: 70 30 70 30;
+	-fx-border-radius: 70 30 70 30;
 }
 
 #settingsLabel {
@@ -34,7 +34,7 @@
 	-fx-background-color: rgba(255, 255, 255, 0.05);
 	-fx-background-radius: 70 30 70 30;
 	-fx-text-fill: #4c64a6;
-    -fx-effect: dropshadow(gaussian, rgba(50, 0, 20, 0.5), 0, 0, 1, 1);
+	-fx-effect: dropshadow(gaussian, rgba(50, 0, 20, 0.5), 0, 0, 1, 1);
 }
 
 #fields:hover {

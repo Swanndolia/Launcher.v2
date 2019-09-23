@@ -11,10 +11,20 @@ import Launcher.minecraft.MinecraftLauncher;
 
 public class Launch {
 
+	public static boolean inUpdate = false;
 	public static String natives;
 	public static void launch() throws LaunchException, InterruptedException 
 	{
+		try {
+			inUpdate = true;
+			Update.update();
+			inUpdate = false;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+		}
+		
 		String memory = "-Xmx" + tweaks.get("memory") + "m";
+		
 		if (tweaks.get("version").equals("1.14"))
     		natives = "bin/natives/1.14";
 		else if (tweaks.get("version").equals("1.7"))
@@ -23,6 +33,7 @@ public class Launch {
     		natives = "bin/natives/1.13";
 		else
     		natives = "bin/natives/1.8-1.12";
+		
 		ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(Controller.infos, new GameFolder("assets", "libs/" + tweaks.get("version"), natives, "bin/" + tweaks.get("version") +".jar"), Login.getAuthInfos());
 		profile.getVmArgs().add(memory);
 		ExternalLauncher launcher = new ExternalLauncher(profile, new BeforeLaunchingEvent() {

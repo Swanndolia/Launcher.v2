@@ -13,6 +13,7 @@ import Launcher.minecraft.GameVersion;
 import Launcher.minecraft.util.ConnectToServer;
 import Launcher.util.CrashReporter;
 import Launcher.util.Saver;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -44,6 +45,9 @@ public class Controller
     
     @FXML
     private Label memoryLabel;
+    
+    @FXML
+    private Label infoLabel;
     
     @FXML
     private Slider themeSlider;
@@ -169,6 +173,7 @@ public class Controller
 			@Override
 			public void run() {
 				try {
+
 					if (tweaks.get("version").equals("1.7"))
 						version = new GameVersion(tweaks.get("version"), GameType.V1_7_10);
 					else 
@@ -178,6 +183,7 @@ public class Controller
 					else 
 						infos = new GameInfos("AzurPixel v4", version, new GameTweak[] {GameTweak.OPTIFINE});
 					new ConnectToServer(ipField.getText(), portField.getText());
+					setInfoText();
 					Launch.launch();
 				} catch (LaunchException | InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -273,7 +279,7 @@ public class Controller
     	versionLabel.setText("Version: " + tweaks.get("version", "1.8"));
     	memoryLabel.setText("Memory: " + tweaks.get("memory", "2048") + " mb");
     	graphicsLabel.setText("Graphics: " + tweaks.get("graphics", "Medium"));
-    	themeLabel.setText("Theme: " + tweaks.get("theme", "Classydark"));
+    	themeLabel.setText("Theme: " + tweaks.get("theme", "ClassyDark"));
 		tweaks.set("version", versionLabel.getText().replaceAll("[^0-9.]?", ""));
 		tweaks.set("memory", memoryLabel.getText().replaceAll("[^0-9.]?", ""));
 		tweaks.set("graphics", graphicsLabel.getText().replaceAll("Graphics\\: ", ""));
@@ -319,4 +325,25 @@ public class Controller
 		skin = new Image("/ui/resources/skin.png");
 		imageView.setImage(skin);
     }
+	
+	@FXML
+	public void setInfoText() {
+		new Thread(() -> {
+			try {
+				while(Launch.inUpdate){
+					Platform.runLater(()-> 	infoLabel.setText("Download in progress, please wait"));
+					Thread.sleep(300);
+					Platform.runLater(()-> 	infoLabel.setText("Download in progress, please wait."));
+					Thread.sleep(300);
+					Platform.runLater(()-> 	infoLabel.setText("Download in progress, please wait.."));
+					Thread.sleep(300);
+					Platform.runLater(()-> 	infoLabel.setText("Download in progress, please wait..."));
+					Thread.sleep(300);
+				}
+				Platform.runLater(()-> infoLabel.setText("Download finished, Starting the game"));
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+			}
+		}).start();
+	}
 }
