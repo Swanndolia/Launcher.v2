@@ -15,12 +15,12 @@ public class Launch {
 	public static void launch() throws LaunchException, InterruptedException 
 	{
 		String memory = "-Xmx" + tweaks.get("memory") + "m";
-		if (tweaks.get("version") == "1.13")
-    		natives = "bin/natives/1.13";
-		if (tweaks.get("version") == "1.14")
+		if (tweaks.get("version").equals("1.14"))
     		natives = "bin/natives/1.14";
-		if (tweaks.get("version") == "1.7")
+		else if (tweaks.get("version").equals("1.7"))
     		natives = "bin/natives/1.7";
+		else if (tweaks.get("version").equals("1.13"))
+    		natives = "bin/natives/1.13";
 		else
     		natives = "bin/natives/1.8-1.12";
 		ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(Controller.infos, new GameFolder("assets", "libs/" + tweaks.get("version"), natives, "bin/" + tweaks.get("version") +".jar"), Login.getAuthInfos());

@@ -32,8 +32,8 @@ public class Controller
 {
 	public static final String url = "https://azurpixel.net";
 	public static final String img  = url.concat("/app/webroot/img/uploads/");
-	public static GameVersion version = new GameVersion("1.8", GameType.V1_8_HIGHER);
-	public static GameInfos infos = new GameInfos("AzurPixel v4", version, new GameTweak[] {GameTweak.OPTIFINE});
+	public static GameVersion version = new GameVersion("1.8", null);
+	public static GameInfos infos = new GameInfos("AzurPixel v4", version, null);
 	public static final File dir = infos.getGameDir();
 	public static Saver tweaks = new Saver(new File(dir, "AzurPixel.properties"));
 	public static final CrashReporter crash = new CrashReporter(infos.getServerName(), new File(dir, "crashs"));
@@ -169,13 +169,15 @@ public class Controller
 			@Override
 			public void run() {
 				try {
-					version = new GameVersion(tweaks.get("version"), GameType.V1_8_HIGHER);
 					if (tweaks.get("version").equals("1.7"))
 						version = new GameVersion(tweaks.get("version"), GameType.V1_7_10);
-					infos = new GameInfos("AzurPixel v4", version, new GameTweak[] {GameTweak.FORGE});
-					infos = new GameInfos("AzurPixel v4", version, new GameTweak[] {GameTweak.OPTIFINE});
+					else 
+						version = new GameVersion(tweaks.get("version"), GameType.V1_8_HIGHER);
 					if (tweaks.get("version").contains("Forge"))
 						infos = new GameInfos("AzurPixel v4", version, new GameTweak[] {GameTweak.FORGE});
+					else 
+						infos = new GameInfos("AzurPixel v4", version, new GameTweak[] {GameTweak.OPTIFINE});
+					new ConnectToServer(ipField.getText(), portField.getText());
 					Launch.launch();
 				} catch (LaunchException | InterruptedException e) {
 					// TODO Auto-generated catch block
