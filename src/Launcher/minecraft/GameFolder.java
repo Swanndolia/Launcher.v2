@@ -2,9 +2,6 @@ package Launcher.minecraft;
 
 public class GameFolder
 {
-
-    public static final GameFolder BASIC = new GameFolder("assets", "libs", "natives", "minecraft.jar");
-
     private String assetsFolder;
 
     private String libsFolder;
@@ -40,5 +37,4 @@ public class GameFolder
     {
         return mainJar;
     }
-
 }

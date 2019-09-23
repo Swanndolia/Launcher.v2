@@ -10,6 +10,7 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -32,12 +33,14 @@ public class Main extends Application {
 	   	AnchorPane root = (AnchorPane) fxmlLoader.load();
 	    final Scene scene = new Scene(root, 1300, 700);
 	    stage = primaryStage;
+	    stage.getIcons().add(new Image("/ui/resources/icon.png"));
 	    stage.setScene(scene);
-	    scene.getStylesheets().add("/ui/resources/application.css");
+
 	    scene.setFill(Color.TRANSPARENT);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setTitle("azurpixel v4");
         stage.setScene(scene);
+
         stage.show();
         //mover
         root.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -57,20 +60,23 @@ public class Main extends Application {
         });
 	  }
 	
-	  public static void main(String[] args) {
-		    String applicationId = "617320590570815498";
-		    String steamId = "";
-		    DiscordEventHandlers handlers = new DiscordEventHandlers();
-		    lib.Discord_Initialize(applicationId, handlers, true, steamId);
-		    presence.startTimestamp = System.currentTimeMillis() / 1000; // epoch second
-		    presence.details = "Viens de lancer le launcher";
-		    presence.state = "Azurpixel / Saber LLC";
-		    presence.largeImageKey = "icone";
-		    presence.largeImageText = "azurpixel.net";
-		    updatePresence();
-		  launch(args);
+	public static void main(String[] args) throws IOException {
+		if (!Controller.dir.exists()) 
+			  Controller.dir.mkdir();
+		String applicationId = "617320590570815498";
+		String steamId = "";
+		DiscordEventHandlers handlers = new DiscordEventHandlers();
+		lib.Discord_Initialize(applicationId, handlers, true, steamId);
+		presence.startTimestamp = System.currentTimeMillis() / 1000; // epoch second
+		presence.details = "Viens de lancer le launcher";
+		presence.state = "Azurpixel / Saber LLC";
+		presence.largeImageKey = "icone";
+		presence.largeImageText = "azurpixel.net";
+		updatePresence();
+		launch(args);
 	  }
-	  
+	
+	
 		public static void updatePresence() {
 		    lib.Discord_UpdatePresence(presence);
 			Thread t = new Thread(() -> {

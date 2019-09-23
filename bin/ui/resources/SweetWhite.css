@@ -1,0 +1,201 @@
+.button {
+	-fx-background-color: transparent;
+	-fx-skin: 'ui.animations.ButtonAnim';
+}
+
+/* Styling the slider track */
+#settingsSlider .track {
+	-fx-border-color: linear-gradient(to left, #780e4b, #82316e, #874e8f, #886aae, #8785c9, #7c83c7, #7082c5, #6480c2, #4c64a6, #35488b, #1d2e6f, #001655);
+	-fx-border-width: 1;
+    -fx-border-radius: 70 20 70 20;
+    -fx-background-color: transparent;
+}
+
+#settingsSlider .thumb {
+    -fx-pref-height: 10;
+    -fx-pref-width: 20;
+    -fx-background-color: transparent;
+    -fx-border-color: linear-gradient(to left, #c777b9, #ba83ca, #4c64a6, #4c64a6, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+    -fx-border-width: 1;
+    -fx-border-radius: 70 30 70 30;
+}
+
+#settingsLabel {
+	-fx-font: 15px verdana;
+	-fx-text-fill: #4c64a6;
+}
+
+#fields {
+	-fx-border-color: linear-gradient(to left, #780e4b, #82316e, #874e8f, #886aae, #8785c9, #7c83c7, #7082c5, #6480c2, #4c64a6, #35488b, #1d2e6f, #001655);
+	-fx-border-width: 0.85;
+    -fx-border-radius: 70 30 70 30;
+	-fx-skin: 'ui.animations.FieldAnim';
+	-fx-font: 15px verdana;
+	-fx-background-color: rgba(255, 255, 255, 0.05);
+	-fx-background-radius: 70 30 70 30;
+	-fx-text-fill: #4c64a6;
+    -fx-effect: dropshadow(gaussian, rgba(50, 0, 20, 0.5), 0, 0, 1, 1);
+}
+
+#fields:hover {
+	-fx-skin: 'ui.animations.FieldAnim';
+	-fx-border-width: 1.5;
+    -fx-border-radius: 70 30 70 30;
+    -fx-border-insets: -2 -2 -2 -2;
+    -fx-background-insets: -2 -2 -2 -2;
+	-fx-background-color: rgba(255, 255, 255, 0.15);
+	-fx-background-radius: 70 30 70 30;
+}
+
+#fields:focused {
+	-fx-skin: 'ui.animations.FieldAnim';
+	-fx-border-color: linear-gradient(to left, #c777b9, #ba83ca, #4c64a6, #4c64a6, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+    -fx-border-width: 1.5;
+    -fx-border-radius: 70 30 70 30;
+    -fx-border-insets: -2 -2 -2 -2;
+	-fx-font: 16px verdana;
+	-fx-background-insets: -2 -2 -2 -2;
+	-fx-background-color: rgba(255, 255, 255, 0.15);
+	-fx-background-radius: 70 30 70 30;
+}
+
+#mainPane {
+	-fx-background-radius: 70 30 70 30;
+	-fx-background-color: linear-gradient(to right top, #ffffff, #fbfdff, #f1feff, #e6feff, #ddfffc, #d6fdf9, #cffcf7, #c8faf4, #bff4fe, #bfecff, #cae3ff, #dad8ff);
+}
+
+#newsPane {
+	-fx-background-radius: 0 0 45 45;
+	-fx-background-color: rgba(200, 200, 200, 0.025);
+	-fx-border-radius: 0 0 45 45;
+	-fx-border-color: linear-gradient(to bottom left, #780e4b, #82316e, #874e8f, #886aae, #8785c9, #7c83c7, #7082c5, #6480c2, #4c64a6, #35488b, #1d2e6f, #001655);
+    -fx-border-width: 0.4;
+}
+
+#newsPane:hover {
+	-fx-background-radius: 0 0 45 45;
+	-fx-background-color: rgba(200, 200, 200, 0.03);
+	-fx-effect: dropshadow(gaussian, rgba(50, 0, 20, 0.5), 0, 0, 1, 1);
+}
+
+#navPane {
+	-fx-background-radius: 45 45 0 0;
+	-fx-border-radius: 45 45 0 0;
+	-fx-background-color: rgba(200, 200, 200, 0.03);
+	-fx-border-color: linear-gradient(to bottom left, #780e4b, #82316e, #874e8f, #886aae, #8785c9, #7c83c7, #7082c5, #6480c2, #4c64a6, #35488b, #1d2e6f, #001655);
+    -fx-border-width: 0.4;
+}
+
+#settingsPane {
+	-fx-border-radius: 45 45 45 45;
+	-fx-background-radius: 45 45 45 45;
+	-fx-background-color: rgba(200, 200, 200, 0.025);
+	-fx-border-color: linear-gradient(to bottom left, #780e4b, #82316e, #874e8f, #886aae, #8785c9, #7c83c7, #7082c5, #6480c2, #4c64a6, #35488b, #1d2e6f, #001655);
+    -fx-border-width: 0.2;
+}
+
+#settingsPane:hover {
+	-fx-background-radius: 45 45 45 45;
+	-fx-background-color: rgba(200, 200, 200, 0.03);
+	-fx-effect: dropshadow(gaussian, rgba(0, 0, 100, 0.5), 0, 0, 1, 1);
+}
+
+#headerPane {
+	-fx-background-radius: 70 30 0 0;
+	-fx-background-color: rgba(255, 255, 255, 0.04);
+}
+
+#footerPane {
+	-fx-background-radius: 0 0 70 30;
+	-fx-background-color: rgba(255, 255, 255, 0.04);
+}
+
+#settings {
+	-fx-graphic: url("settings.png");
+}
+
+#hide {
+	-fx-graphic: url("hide.png");
+}
+
+#close {
+	-fx-graphic: url("close.png");
+}
+
+#login {
+	-fx-graphic: url("login.png");
+}
+
+#play {
+	-fx-graphic: url("play.png");
+}
+
+#logout {
+	-fx-graphic: url("logout.png");
+}
+
+#settings:hover{
+	-fx-graphic: url("settingsHover.png");
+}
+
+#hide:hover {
+	-fx-graphic: url("hideHover.png");
+}
+
+#close:hover {
+	-fx-graphic: url("closeHover.png");
+}
+
+#login:hover {
+	-fx-graphic: url("loginHover.png");
+}
+
+#play:hover {
+	-fx-graphic: url("playHover.png");
+}
+
+#logout:hover {
+	-fx-graphic: url("logoutHover.png");
+}
+
+#settings:pressed{
+	-fx-scale-y: 0.9;
+	-fx-scale-x: 0.9;
+}
+
+#hide:pressed {
+	-fx-scale-y: 0.9;
+	-fx-scale-x: 0.9;
+}
+
+#close:pressed {
+	-fx-scale-y: 0.9;
+	-fx-scale-x: 0.9;
+}
+
+#login:pressed {
+	-fx-scale-y: 0.9;
+	-fx-scale-x: 0.9;
+}
+
+#play:pressed {
+	-fx-scale-y: 0.9;
+	-fx-scale-x: 0.9;
+}
+
+#logout:pressed {
+	-fx-scale-y: 0.9;
+	-fx-scale-x: 0.9;
+}
+
+#box {
+	-fx-graphic: url("box.png");
+}
+
+#boxChecked {
+	-fx-graphic: url("boxChecked.png");
+}
+
+#test {
+	-fx-graphic: url("top.png");
+}

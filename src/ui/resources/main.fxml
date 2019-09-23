@@ -9,7 +9,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 
-<AnchorPane id="anchorPane" prefHeight="700" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="application.Controller">
+<AnchorPane fx:id="mainPane" id="mainPane" prefHeight="700" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="application.Controller">
 
   <Button id="close" layoutX="1253.0" layoutY="10.0" mnemonicParsing="false" text="" onAction="#appExit"/>
   <Button id="hide" layoutX="1253.0" layoutY="50.0" mnemonicParsing="false" text="" onAction="#appMinimize"/>
@@ -30,17 +30,19 @@
   </ImageView>
 </AnchorPane>
 
-<AnchorPane fx:id="profilPane" id="settingsPane" prefHeight="370" prefWidth="470" layoutX="50" layoutY="230" >
+<AnchorPane fx:id="profilPane" id="settingsPane" prefHeight="370" prefWidth="470" layoutX="50" layoutY="230" visible="false" >
 
 </AnchorPane>
 
-<AnchorPane fx:id="settingsPane" id="settingsPane" prefHeight="370" prefWidth="470" layoutX="50" layoutY="230" visible="false">
-<Label text="Version:" layoutX="150" layoutY="30" />
-<Slider layoutX="100" layoutY="55"/>
-<Label text="Graphics:" layoutX="150" layoutY="90" />
-<Slider layoutX="100" layoutY="115"/>
-<Label text="Memory:" layoutX="150" layoutY="150" />
-<Slider layoutX="100" layoutY="175"/>
+<AnchorPane fx:id="settingsPane" id="settingsPane" prefHeight="370" prefWidth="470" layoutX="50" layoutY="230">
+<Label fx:id="versionLabel" id="settingsLabel" text="Version:" layoutX="50" layoutY="30"/>
+<Slider fx:id="versionSlider" id="settingsSlider" layoutX="80" layoutY="55"  min="7" max="14" prefWidth="300" />
+<Label fx:id="graphicsLabel" id="settingsLabel" text="Graphics:" layoutX="50" layoutY="90" />
+<Slider fx:id="graphicsSlider" id="settingsSlider" layoutX="80" layoutY="115" prefWidth="300"/>
+<Label fx:id="memoryLabel" id="settingsLabel" text="Memory:" layoutX="50" layoutY="150" />
+<Slider fx:id="memorySlider" id="settingsSlider" layoutX="80" layoutY="175"  min="512" max="8096" prefWidth="300" 	snapToTicks="true" 	majorTickUnit="2"	minorTickCount="0" />
+<Label fx:id="themeLabel" id="settingsLabel" text="Theme:" layoutX="50" layoutY="210" />
+<Slider fx:id="themeSlider" id="settingsSlider" layoutX="80" layoutY="235" prefWidth="300"/>
 </AnchorPane>
 
 <AnchorPane fx:id="navPane" id="navPane" prefHeight="45" prefWidth="700" layoutX="550" layoutY="50.0">

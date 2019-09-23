@@ -14,5 +14,4 @@ public class GameDirGenerator
         else
             return new File(System.getProperty("user.home") + "/." + serverName);
     }
-
 }
