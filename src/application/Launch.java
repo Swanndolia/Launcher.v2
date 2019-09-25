@@ -34,7 +34,7 @@ public class Launch {
 		else
     		natives = "bin/natives/1.8-1.12";
 		
-		ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(Controller.infos, new GameFolder("assets", "libs/" + tweaks.get("version"), natives, "bin/" + tweaks.get("version") +".jar"), Login.getAuthInfos());
+		ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(Controller.infos, new GameFolder("assets", "libs/" + tweaks.get("version"), natives, "bin/" + tweaks.get("version") +".jar"), Login.authInfos);
 		profile.getVmArgs().add(memory);
 		ExternalLauncher launcher = new ExternalLauncher(profile, new BeforeLaunchingEvent() {
 			@Override
@@ -44,9 +44,9 @@ public class Launch {
 					processBuilder.command().set(0, javaPath);
 			}
 		});
-
 		int exitCode = launcher.launch().waitFor();
 		System.out.println("\nMinecraft finished with exit code " + exitCode);
+		System.exit(exitCode);
 	}
 
 }

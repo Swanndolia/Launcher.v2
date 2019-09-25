@@ -1,42 +1,59 @@
+.root {
+    -fx-font-family: Montserrat;
+}
+
 .button {
 	-fx-background-color: transparent;
 	-fx-skin: 'ui.animations.ButtonAnim';
 }
 
-/* Styling the slider track */
 #settingsSlider .track {
-	-fx-border-color: linear-gradient(to left, #780e4b, #82316e, #874e8f, #886aae, #8785c9, #7c83c7, #7082c5, #6480c2, #4c64a6, #35488b, #1d2e6f, #001655);
+	-fx-border-color: linear-gradient(to right top, #140a11, #130b13, #120d14, #100e15, #0f0f16, #0e1017, #0c1218, #0b1318, #0a1519, #091619, #091819, #0a1918);
 	-fx-border-width: 1;
     -fx-border-radius: 70 20 70 20;
     -fx-background-color: transparent;
+}
+#settingsSlider:hover .track {
+	-fx-border-color: linear-gradient(to right top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
+}
+#settingsSlider:focused:hover .track {
+	-fx-border-color: linear-gradient(to right top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
 }
 
 #settingsSlider .thumb {
     -fx-pref-height: 10;
     -fx-pref-width: 20;
     -fx-background-color: transparent;
-    -fx-border-color: linear-gradient(to left, #c777b9, #ba83ca, #4c64a6, #4c64a6, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+    -fx-border-color: linear-gradient(to right top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
     -fx-border-width: 1;
-    -fx-border-radius: 70 30 70 30;
+	-fx-border-radius: 70 30 70 30;
+}
+#settingsSlider:hover .thumb {
+    -fx-border-color: linear-gradient(to right top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
+}
+#settingsSlider:hover:focused .thumb {
+    -fx-border-color: white;
 }
 
 #settingsLabel {
-	-fx-font: 15px verdana;
-	-fx-text-fill: #4c64a6;
+	-fx-font-size: 16px;
+	-fx-text-fill: #8888ff;
+}
+#settingsLabel:hover {
+	-fx-text-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
 }
 
 #fields {
-	-fx-border-color: linear-gradient(to left, #780e4b, #82316e, #874e8f, #886aae, #8785c9, #7c83c7, #7082c5, #6480c2, #4c64a6, #35488b, #1d2e6f, #001655);
+	-fx-border-color: linear-gradient(to right top, #281921, #261b25, #241c28, #221e2a, #1f202c, #1c222e, #19232f, #162530, #122730, #10292f, #102b2e, #132d2b);
 	-fx-border-width: 0.85;
     -fx-border-radius: 70 30 70 30;
 	-fx-skin: 'ui.animations.FieldAnim';
-	-fx-font: 15px verdana;
-	-fx-background-color: rgba(255, 255, 255, 0.05);
+	-fx-font-size: 16px ;
+	-fx-background-color: rgba(100, 100, 100, 0.05);
 	-fx-background-radius: 70 30 70 30;
-	-fx-text-fill: #4c64a6;
-    -fx-effect: dropshadow(gaussian, rgba(50, 0, 20, 0.5), 0, 0, 1, 1);
-}
+	-fx-text-fill: #8888ff;
 
+}
 #fields:hover {
 	-fx-skin: 'ui.animations.FieldAnim';
 	-fx-border-width: 1.5;
@@ -45,59 +62,64 @@
     -fx-background-insets: -2 -2 -2 -2;
 	-fx-background-color: rgba(255, 255, 255, 0.15);
 	-fx-background-radius: 70 30 70 30;
+	-fx-text-fill: linear-gradient(to top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
+	-fx-border-color: linear-gradient(to right top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
 }
-
 #fields:focused {
 	-fx-skin: 'ui.animations.FieldAnim';
-	-fx-border-color: linear-gradient(to left, #c777b9, #ba83ca, #4c64a6, #4c64a6, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+	-fx-border-color: linear-gradient(to right top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
     -fx-border-width: 1.5;
     -fx-border-radius: 70 30 70 30;
     -fx-border-insets: -2 -2 -2 -2;
-	-fx-font: 16px verdana;
+	-fx-font-size: 18px;
 	-fx-background-insets: -2 -2 -2 -2;
 	-fx-background-color: rgba(255, 255, 255, 0.15);
 	-fx-background-radius: 70 30 70 30;
+	-fx-text-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
 }
 
 #mainPane {
 	-fx-background-radius: 70 30 70 30;
-	-fx-background-color: linear-gradient(to right top, #6b6bd1, #008eea, #00aaeb, #00c1db, #00d4c3, #41deb5, #6ae6a4, #91ed92, #9bf187, #a8f57b, #b6f86d, #c5fb5f);
+	-fx-background-color: linear-gradient(to top left, #000000, #020001, #030002, #030004, #030006, #030007, #030009, #02000a, #04000a, #06000a, #08000a, #0a000a);
 }
 
 #newsPane {
 	-fx-background-radius: 0 0 45 45;
 	-fx-background-color: rgba(200, 200, 200, 0.025);
 	-fx-border-radius: 0 0 45 45;
-	-fx-border-color: linear-gradient(to bottom left, #780e4b, #82316e, #874e8f, #886aae, #8785c9, #7c83c7, #7082c5, #6480c2, #4c64a6, #35488b, #1d2e6f, #001655);
+	-fx-border-color: linear-gradient(to right top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
     -fx-border-width: 0.4;
 }
-
 #newsPane:hover {
 	-fx-background-radius: 0 0 45 45;
 	-fx-background-color: rgba(200, 200, 200, 0.03);
-	-fx-effect: dropshadow(gaussian, rgba(50, 0, 20, 0.5), 0, 0, 1, 1);
+	-fx-border-color: linear-gradient(to right top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
 }
 
 #navPane {
 	-fx-background-radius: 45 45 0 0;
 	-fx-border-radius: 45 45 0 0;
 	-fx-background-color: rgba(200, 200, 200, 0.03);
-	-fx-border-color: linear-gradient(to bottom left, #780e4b, #82316e, #874e8f, #886aae, #8785c9, #7c83c7, #7082c5, #6480c2, #4c64a6, #35488b, #1d2e6f, #001655);
+	-fx-border-color: linear-gradient(to right top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
     -fx-border-width: 0.4;
+}
+#navPane:hover {
+	-fx-background-radius: 0 0 45 45;
+	-fx-background-color: rgba(200, 200, 200, 0.03);
+	-fx-border-color: linear-gradient(to right top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
 }
 
 #settingsPane {
 	-fx-border-radius: 45 45 45 45;
 	-fx-background-radius: 45 45 45 45;
 	-fx-background-color: rgba(200, 200, 200, 0.025);
-	-fx-border-color: linear-gradient(to bottom left, #780e4b, #82316e, #874e8f, #886aae, #8785c9, #7c83c7, #7082c5, #6480c2, #4c64a6, #35488b, #1d2e6f, #001655);
+	-fx-border-color: linear-gradient(to right top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
     -fx-border-width: 0.2;
 }
-
 #settingsPane:hover {
 	-fx-background-radius: 45 45 45 45;
 	-fx-background-color: rgba(200, 200, 200, 0.03);
-	-fx-effect: dropshadow(gaussian, rgba(0, 0, 100, 0.5), 0, 0, 1, 1);
+	-fx-border-color: linear-gradient(to right top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
 }
 
 #headerPane {

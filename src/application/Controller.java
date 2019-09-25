@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import Launcher.LaunchException;
+import Launcher.minecraft.AuthInfos;
 import Launcher.minecraft.GameInfos;
 import Launcher.minecraft.GameTweak;
 import Launcher.minecraft.GameType;
@@ -16,7 +17,6 @@ import Launcher.util.Saver;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -25,7 +25,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Window;
 import openauth.AuthenticationException;
 
 public class Controller 
@@ -38,7 +37,6 @@ public class Controller
 	public static final File dir = infos.getGameDir();
 	public static Saver tweaks = new Saver(new File(dir, "AzurPixel.properties"));
 	public static final CrashReporter crash = new CrashReporter(infos.getServerName(), new File(dir, "crashs"));
-	private Window owner;
 	   
     @FXML
     private Slider memorySlider;
@@ -107,7 +105,7 @@ public class Controller
     private ImageView imageView;
     
     @FXML
-    private AnchorPane mainPane;
+    public AnchorPane mainPane;
     
     @FXML
     private AnchorPane settingsPane;
@@ -145,20 +143,20 @@ public class Controller
 
 	@FXML
 	 protected void login(ActionEvent event) {
-
 	    if (!nameField.getText().matches("^[A-Za-z0-9]{3,20}$") && passField.getText().isEmpty())
-	        Alerts.showAlert(Alert.AlertType.ERROR, owner, "Invalid Fields", "Your username should contain between 3 to 20 alphanumeric chars");
+	    	;
 	    else if (!nameField.getText().matches("^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$") && !passField.getText().isEmpty()) 
-	        Alerts.showAlert(Alert.AlertType.ERROR, owner, "Invalid Mail", "Use you mojang account email and password or just type an username without password");
+	    	;
 	    else {
 	    	try {
 	      		Login.tryLogin(nameField.getText(), passField.getText());
-				Alerts.showAlert(Alert.AlertType.CONFIRMATION, owner, "Login Succes",  "Welcome " + Login.getName());
+				// TODO Alerts.showAlert(Alert.AlertType.CONFIRMATION, owner, "Login Succes",  "Welcome " + Login.name);
+				loadSkin(Login.name);
+				if (keepLoginCheck.isVisible())
+					tweaks.set("username", Login.authInfos.getUsername());
 				switchElementsState(true);
-				loadSkin(Login.getName());
-
 	     	} catch (AuthenticationException e) {
-	       		Alerts.showAlert(Alert.AlertType.CONFIRMATION, owner, "Login Error",  "Incorrect mail or password, just type an username if you don't have mojang account");
+	     		// TODO		Alerts.showAlert(Alert.AlertType.CONFIRMATION, owner, "Login Error",  "Incorrect mail or password, just type an username if you don't have mojang account");
 	       	} catch (MalformedURLException e) {
 	       		// TODO Auto-generated catch block
 	        } catch (IOException e) {
@@ -173,7 +171,6 @@ public class Controller
 			@Override
 			public void run() {
 				try {
-
 					if (tweaks.get("version").equals("1.7"))
 						version = new GameVersion(tweaks.get("version"), GameType.V1_7_10);
 					else 
@@ -185,13 +182,13 @@ public class Controller
 					new ConnectToServer(ipField.getText(), portField.getText());
 					setInfoText();
 					Launch.launch();
+					mainPane.setVisible(false);	
 				} catch (LaunchException | InterruptedException e) {
 					// TODO Auto-generated catch block
 				}
 			}
 		}.start();
 	}
-   
     @FXML
 	private void keepLogin(ActionEvent event) {
     	if (keepLoginCheck.isVisible()) {
@@ -213,20 +210,22 @@ public class Controller
     	playButton.setVisible(loged);
     	logoutButton.setVisible(loged);
     	loginButton.setVisible(!loged);
-    	nameField.setEditable(!loged);
-    	passField.setEditable(!loged);
+    	nameField.setDisable(loged);
+    	passField.setVisible(!loged);
     	settingsPane.setVisible(!loged);
     	profilPane.setVisible(loged);
     	if(keepLoginCheck.isVisible())
-    		keepLoginCheck.setVisible(loged);
-    	keepLogin.setVisible(loged);
-    	ipField.setVisible(!loged);
-    	portField.setVisible(!loged);
+    		keepLoginCheck.setVisible(!loged);
+    	keepLogin.setVisible(!loged);
+    	ipField.setVisible(loged);
+    	portField.setVisible(loged);
     }
 	
     public void initialize() {
     	defSettings();
-		
+    	if (!System.getProperty("os.arch").contains("64"))
+    		memorySlider.setMax(1024);
+
     	versionSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
 
     		versionLabel.setText("Version: 1." + Double.toString(newValue.intValue()).replaceAll(".0$", ""));
@@ -272,12 +271,28 @@ public class Controller
         	themeLabel.setText("Theme: " + tweaks.get("theme"));
 			mainPane.getStylesheets().add("/ui/resources/" + tweaks.get("theme") + ".css");
         });
-
+    	
+    	if (tweaks.get("username").equals(""))
+    		keepLogin.setVisible(true);
+    	else {
+    		keepLoginCheck.setVisible(true);
+		try {
+				Login.refresh();
+				nameField.setText("Loged in as " + tweaks.get("username"));
+				loadSkin(tweaks.get("username"));
+				switchElementsState(true);
+			} catch (AuthenticationException | IOException e) {
+				// TODO Auto-generated catch block
+			}
+    	}
     }
     
     private void defSettings() {
+    	
+    	if (tweaks.get("username") == null)
+    		tweaks.set("username", "");
     	versionLabel.setText("Version: " + tweaks.get("version", "1.8"));
-    	memoryLabel.setText("Memory: " + tweaks.get("memory", "2048") + " mb");
+    	memoryLabel.setText("Memory: " + tweaks.get("memory", "1024") + " mb");
     	graphicsLabel.setText("Graphics: " + tweaks.get("graphics", "Medium"));
     	themeLabel.setText("Theme: " + tweaks.get("theme", "ClassyDark"));
 		tweaks.set("version", versionLabel.getText().replaceAll("[^0-9.]?", ""));
@@ -319,11 +334,15 @@ public class Controller
     
 	@FXML
     protected void logout() throws AuthenticationException {
-		Alerts.showAlert(Alert.AlertType.INFORMATION, owner, "Logout Succes",  "See you later " + Login.getName());
-		Login.tryLogin("", "Disconnect me");
+		// TODO Alerts.showAlert(Alert.AlertType.INFORMATION, owner, "Logout Succes",  "See you later");
+		Login.authInfos = new AuthInfos("", "", "");	
 		switchElementsState(false);
 		skin = new Image("/ui/resources/skin.png");
 		imageView.setImage(skin);
+		tweaks.set("username", "");
+		tweaks.set("access-token", "");
+		nameField.setText("");
+		passField.setText("");
     }
 	
 	@FXML
