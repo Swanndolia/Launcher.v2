@@ -2,7 +2,6 @@ package application;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import Launcher.LaunchException;
@@ -14,8 +13,11 @@ import Launcher.minecraft.GameVersion;
 import Launcher.minecraft.util.ConnectToServer;
 import Launcher.util.CrashReporter;
 import Launcher.util.Saver;
+import application.console.ConsoleFrame;
+import fr.theshark34.supdate.BarAPI;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,6 +26,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import openauth.AuthenticationException;
 
@@ -31,12 +35,13 @@ public class Controller
 
 {
 	public static final String url = "https://azurpixel.net";
-	public static final String img  = url.concat("/app/webroot/img/uploads/");
 	public static GameVersion version = new GameVersion("1.8", null);
 	public static GameInfos infos = new GameInfos("AzurPixel v4", version, null);
 	public static final File dir = infos.getGameDir();
 	public static Saver tweaks = new Saver(new File(dir, "AzurPixel.properties"));
 	public static final CrashReporter crash = new CrashReporter(infos.getServerName(), new File(dir, "crashs"));
+	
+	public int is = 0;
 	   
     @FXML
     private Slider memorySlider;
@@ -111,7 +116,7 @@ public class Controller
     private AnchorPane settingsPane;
     
     @FXML
-    private AnchorPane profilPane;
+    private AnchorPane infoPane;
     
     @FXML
     private AnchorPane newsPane;
@@ -133,11 +138,11 @@ public class Controller
 	{
 		if (!settingsPane.isVisible()) {
 			settingsPane.setVisible(true);
-			profilPane.setVisible(false);
+			infoPane.setVisible(false);
 		}
 		else {
 			settingsPane.setVisible(false);
-			profilPane.setVisible(true);
+			infoPane.setVisible(true);
 		}
 	}
 
@@ -150,18 +155,16 @@ public class Controller
 	    else {
 	    	try {
 	      		Login.tryLogin(nameField.getText(), passField.getText());
-				// TODO Alerts.showAlert(Alert.AlertType.CONFIRMATION, owner, "Login Succes",  "Welcome " + Login.name);
+				// TODO 
+	        	System.out.print("Login Succes, " + "Welcome " + Login.name + '\n');
 				loadSkin(Login.name);
 				if (keepLoginCheck.isVisible())
 					tweaks.set("username", Login.authInfos.getUsername());
 				switchElementsState(true);
 	     	} catch (AuthenticationException e) {
-	     		// TODO		Alerts.showAlert(Alert.AlertType.CONFIRMATION, owner, "Login Error",  "Incorrect mail or password, just type an username if you don't have mojang account");
-	       	} catch (MalformedURLException e) {
-	       		// TODO Auto-generated catch block
-	        } catch (IOException e) {
-				// TODO Auto-generated catch block
-	        }
+	     		// TODO		
+	        	System.out.print("Login Error," + "Incorrect mail or password, just type an username if you don't have mojang account" + '\n');
+	       	}
 	    }
 	}
     
@@ -180,9 +183,9 @@ public class Controller
 					else 
 						infos = new GameInfos("AzurPixel v4", version, new GameTweak[] {GameTweak.OPTIFINE});
 					new ConnectToServer(ipField.getText(), portField.getText());
-					setInfoText();
+					setInfoText(null);
+					infoPane.setVisible(true);
 					Launch.launch();
-					mainPane.setVisible(false);	
 				} catch (LaunchException | InterruptedException e) {
 					// TODO Auto-generated catch block
 				}
@@ -201,9 +204,17 @@ public class Controller
     	}
    }
 
-    public void loadSkin(String name) throws MalformedURLException, IOException {
-	    skin = new Image(new URL("https://mc-heads.net/head/" + name + "/120").openStream());
-		imageView.setImage(skin);
+    public void loadSkin(String name) {
+		new Thread(() -> {
+			Platform.runLater(()-> 	 {
+				try {
+					skin = new Image(new URL("https://mc-heads.net/head/" + name + "/120").openStream());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+				}
+			});
+			Platform.runLater(()-> 	imageView.setImage(skin));
+		}).start();
     }
    
     public void switchElementsState(boolean loged) {
@@ -213,7 +224,6 @@ public class Controller
     	nameField.setDisable(loged);
     	passField.setVisible(!loged);
     	settingsPane.setVisible(!loged);
-    	profilPane.setVisible(loged);
     	if(keepLoginCheck.isVisible())
     		keepLoginCheck.setVisible(!loged);
     	keepLogin.setVisible(!loged);
@@ -222,7 +232,11 @@ public class Controller
     }
 	
     public void initialize() {
+    	ConsoleFrame console = new ConsoleFrame();
+    	System.out.print("Azurpixel / Saber LLC Launcher console, send a full capture of this to report any bugs" + '\n');
     	defSettings();
+    	System.out.print("java version: " + System.getProperty("java.version") + '\n');
+    	System.out.print("os arch: " + System.getProperty("os.arch") + '\n');
     	if (!System.getProperty("os.arch").contains("64"))
     		memorySlider.setMax(1024);
 
@@ -281,10 +295,27 @@ public class Controller
 				nameField.setText("Loged in as " + tweaks.get("username"));
 				loadSkin(tweaks.get("username"));
 				switchElementsState(true);
-			} catch (AuthenticationException | IOException e) {
+			} catch (AuthenticationException e) {
 				// TODO Auto-generated catch block
 			}
     	}
+    	
+        mainPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
+                if (ke.getCode() == KeyCode.ENTER) {
+                	if (passField.isVisible()) {
+                		login(null);
+                	} else
+                		try {
+                			play(null);
+                		} catch (LaunchException | InterruptedException e) {
+                			// TODO Auto-generated catch block
+                		}
+               	}
+                else if (ke.getCode() == KeyCode.ESCAPE) 
+                	console.setVisible(true);
+            }
+        });
     }
     
     private void defSettings() {
@@ -334,7 +365,8 @@ public class Controller
     
 	@FXML
     protected void logout() throws AuthenticationException {
-		// TODO Alerts.showAlert(Alert.AlertType.INFORMATION, owner, "Logout Succes",  "See you later");
+		// TODO 
+    	System.out.print("Logout Succes, " + "See you later" + '\n');
 		Login.authInfos = new AuthInfos("", "", "");	
 		switchElementsState(false);
 		skin = new Image("/ui/resources/skin.png");
@@ -344,25 +376,36 @@ public class Controller
 		nameField.setText("");
 		passField.setText("");
     }
-	
-	@FXML
-	public void setInfoText() {
+
+	public void setInfoText(String stringList[]) {
 		new Thread(() -> {
 			try {
-				while(Launch.inUpdate){
-					Platform.runLater(()-> 	infoLabel.setText("Download in progress, please wait"));
-					Thread.sleep(300);
-					Platform.runLater(()-> 	infoLabel.setText("Download in progress, please wait."));
-					Thread.sleep(300);
-					Platform.runLater(()-> 	infoLabel.setText("Download in progress, please wait.."));
-					Thread.sleep(300);
-					Platform.runLater(()-> 	infoLabel.setText("Download in progress, please wait..."));
+				if (BarAPI.getNumberOfTotalBytesToDownload() != 0) {
+					while(Launch.inUpdate) {
+						setInfoLoading("Download in progress, please wait", "Download finished", 300);
+					}
+				}
+				setInfoLoading("Starting the game, please wait", "Here you go ! Have fun !", 300);
+				while (stringList[is] != null) {
+					Platform.runLater(()-> 	infoLabel.setText(stringList[is]));
+					is++;
 					Thread.sleep(300);
 				}
-				Platform.runLater(()-> infoLabel.setText("Download finished, Starting the game"));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 			}
 		}).start();
+	}
+
+	private void setInfoLoading(String string, String end, int time) throws InterruptedException {
+		Platform.runLater(()-> 	infoLabel.setText(string));
+		Thread.sleep(time);
+		Platform.runLater(()-> 	infoLabel.setText(string + "."));
+		Thread.sleep(time);
+		Platform.runLater(()-> 	infoLabel.setText(string + ".."));
+		Thread.sleep(time);
+		Platform.runLater(()-> 	infoLabel.setText(string + "..."));
+		Thread.sleep(time);
+		Platform.runLater(()-> 	infoLabel.setText(""));
 	}
 }

@@ -30,7 +30,7 @@
   </ImageView>
 </AnchorPane>
 
-<AnchorPane fx:id="profilPane" id="settingsPane" prefHeight="370" prefWidth="470" layoutX="50" layoutY="230" visible="false" >
+<AnchorPane fx:id="infoPane" id="settingsPane" prefHeight="370" prefWidth="470" layoutX="50" layoutY="230" visible="false" >
 <Label fx:id="infoLabel" id="settingsLabel" layoutX="50" layoutY="30"/>
 </AnchorPane>
 

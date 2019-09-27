@@ -42,6 +42,9 @@ public class Main extends Application {
         stage.setScene(scene);
 
         stage.show();
+        
+        root.setFocusTraversable(true);
+
         //mover
         root.setOnMousePressed(new EventHandler<MouseEvent>() {
         	@Override

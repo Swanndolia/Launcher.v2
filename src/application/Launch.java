@@ -46,7 +46,6 @@ public class Launch {
 		});
 		int exitCode = launcher.launch().waitFor();
 		System.out.println("\nMinecraft finished with exit code " + exitCode);
-		System.exit(exitCode);
 	}
 
 }

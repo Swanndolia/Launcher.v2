@@ -232,7 +232,7 @@
 	-fx-font-size: 15px;
 	-fx-text-fill: linear-gradient(to top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
 }
-#box:hover{
+#boxChecked:hover{
 	-fx-text-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
 }
 
