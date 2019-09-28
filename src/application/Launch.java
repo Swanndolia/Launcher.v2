@@ -11,18 +11,9 @@ import Launcher.minecraft.MinecraftLauncher;
 
 public class Launch {
 
-	public static boolean inUpdate = false;
 	public static String natives;
 	public static void launch() throws LaunchException, InterruptedException 
 	{
-		try {
-			inUpdate = true;
-			Update.update();
-			inUpdate = false;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-		}
-		
 		String memory = "-Xmx" + tweaks.get("memory") + "m";
 		
 		if (tweaks.get("version").equals("1.14"))

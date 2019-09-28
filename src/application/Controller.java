@@ -3,6 +3,8 @@ package application;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import Launcher.LaunchException;
 import Launcher.minecraft.AuthInfos;
@@ -11,10 +13,11 @@ import Launcher.minecraft.GameTweak;
 import Launcher.minecraft.GameType;
 import Launcher.minecraft.GameVersion;
 import Launcher.minecraft.util.ConnectToServer;
-import Launcher.util.CrashReporter;
+import Launcher.minecraft.util.MinecraftPing;
+import Launcher.minecraft.util.MinecraftPing.MinecraftPingReply;
+import Launcher.minecraft.util.Presets;
 import Launcher.util.Saver;
 import application.console.ConsoleFrame;
-import fr.theshark34.supdate.BarAPI;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -39,9 +42,10 @@ public class Controller
 	public static GameInfos infos = new GameInfos("AzurPixel v4", version, null);
 	public static final File dir = infos.getGameDir();
 	public static Saver tweaks = new Saver(new File(dir, "AzurPixel.properties"));
-	public static final CrashReporter crash = new CrashReporter(infos.getServerName(), new File(dir, "crashs"));
-	
-	public int is = 0;
+	private boolean inUpdate = true;
+	private AtomicBoolean isRunning = new AtomicBoolean(false);
+	private AtomicBoolean tryToRun = new AtomicBoolean(false);
+	private AtomicInteger is = new AtomicInteger(0);
 	   
     @FXML
     private Slider memorySlider;
@@ -145,25 +149,45 @@ public class Controller
 			infoPane.setVisible(true);
 		}
 	}
+	
+	private void setInfoPaneVisible() {
+		if (!infoPane.isVisible()) {
+			infoPane.setVisible(true);
+			settingsPane.setVisible(false);
+		}
+	}
 
 	@FXML
-	 protected void login(ActionEvent event) {
-	    if (!nameField.getText().matches("^[A-Za-z0-9]{3,20}$") && passField.getText().isEmpty())
-	    	;
-	    else if (!nameField.getText().matches("^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$") && !passField.getText().isEmpty()) 
-	    	;
+	 private void login(ActionEvent event) {
+		noSpamButton();
+	    if (!nameField.getText().matches("^[A-Za-z0-9]{3,20}$") && passField.getText().isEmpty()) {
+     		String[] tableauChaine = {"Login Error,", "Invalid username", "you should use only alphanumeric", "between 3 and 20 characters lenght"};
+     		setInfoPaneVisible();
+     		setInfoText(tableauChaine, 4, 750);
+        	System.out.print("Login Error, Invalid username, you should use only alphanumeric characters between 3 and 20 lenght" + '\n');
+	    }
+	    else if (!nameField.getText().matches("^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$") && !passField.getText().isEmpty()) {
+     		String[] tableauChaine = {"Login Error,", "Invalids forms,", "type only a username to login as crack,", "or use your mojang email and password."};
+     		setInfoPaneVisible();
+     		setInfoText(tableauChaine, 4, 750);
+        	System.out.print("Login Error," + "Invalids forms, type only a username to login as crack, or use your mojang email and password." + '\n');
+	    }
 	    else {
 	    	try {
 	      		Login.tryLogin(nameField.getText(), passField.getText());
-				// TODO 
 	        	System.out.print("Login Succes, " + "Welcome " + Login.name + '\n');
 				loadSkin(Login.name);
 				if (keepLoginCheck.isVisible())
 					tweaks.set("username", Login.authInfos.getUsername());
+	     		String[] tableauChaine = {"Login Success,", "Welcome " + Login.name};
 				switchElementsState(true);
+	     		setInfoPaneVisible();
+	     		setInfoText(tableauChaine, 2, 750);
 	     	} catch (AuthenticationException e) {
-	     		// TODO		
-	        	System.out.print("Login Error," + "Incorrect mail or password, just type an username if you don't have mojang account" + '\n');
+	     		String[] tableauChaine = {"Login Error,", "Incorrect mail or password,", "if you don't have mojang account,", "just type a username without pass."};
+	     		setInfoPaneVisible();
+	     		setInfoText(tableauChaine, 4, 750);
+	     		System.out.print("Login Error, Incorrect mail or password if you don't have mojang account just type a username without pass." + '\n');
 	       	}
 	    }
 	}
@@ -183,11 +207,16 @@ public class Controller
 					else 
 						infos = new GameInfos("AzurPixel v4", version, new GameTweak[] {GameTweak.OPTIFINE});
 					new ConnectToServer(ipField.getText(), portField.getText());
-					setInfoText(null);
-					infoPane.setVisible(true);
+					if (settingsPane.isVisible())
+						openSettings();
+					playInfo();
+					logoutButton.setDisable(true);
 					Launch.launch();
 				} catch (LaunchException | InterruptedException e) {
-					// TODO Auto-generated catch block
+		     		String[] tableauChaine = {"Launch Error,", "Please report this error,", "press escape to open the console", "then send a screenshot of it"};
+		     		setInfoPaneVisible();
+		     		setInfoText(tableauChaine, 4, 750);
+		        	System.out.print("Launch Error, Please report this error, send a screenshot of this" + '\n' + e + '\n');
 				}
 			}
 		}.start();
@@ -204,42 +233,40 @@ public class Controller
     	}
    }
 
-    public void loadSkin(String name) {
+   private void loadSkin(String name) {
 		new Thread(() -> {
-			Platform.runLater(()-> 	 {
-				try {
-					skin = new Image(new URL("https://mc-heads.net/head/" + name + "/120").openStream());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-				}
-			});
+			try {
+				skin = new Image(new URL("https://mc-heads.net/head/" + name + "/120").openStream());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+			}
 			Platform.runLater(()-> 	imageView.setImage(skin));
 		}).start();
     }
    
-    public void switchElementsState(boolean loged) {
+    private void switchElementsState(boolean loged) {
     	playButton.setVisible(loged);
     	logoutButton.setVisible(loged);
     	loginButton.setVisible(!loged);
     	nameField.setDisable(loged);
     	passField.setVisible(!loged);
-    	settingsPane.setVisible(!loged);
     	if(keepLoginCheck.isVisible())
     		keepLoginCheck.setVisible(!loged);
     	keepLogin.setVisible(!loged);
     	ipField.setVisible(loged);
     	portField.setVisible(loged);
     }
-	
+    
     public void initialize() {
     	ConsoleFrame console = new ConsoleFrame();
     	System.out.print("Azurpixel / Saber LLC Launcher console, send a full capture of this to report any bugs" + '\n');
-    	defSettings();
     	System.out.print("java version: " + System.getProperty("java.version") + '\n');
     	System.out.print("os arch: " + System.getProperty("os.arch") + '\n');
+    	
     	if (!System.getProperty("os.arch").contains("64"))
     		memorySlider.setMax(1024);
-
+    	defSettings();
+    	showPing();
     	versionSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
 
     		versionLabel.setText("Version: 1." + Double.toString(newValue.intValue()).replaceAll(".0$", ""));
@@ -255,18 +282,20 @@ public class Controller
     	graphicsSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
     		if (newValue.intValue() == 0) 
         		graphicsLabel.setText("Graphics: Potatoe");
-    		else if (newValue.intValue() > 0 && newValue.intValue() < 20) 
+    		else if (newValue.intValue() > 0 && newValue.intValue() < 15) 
     			graphicsLabel.setText("Graphics: Very Low");
-    		else if (newValue.intValue() >= 20 && newValue.intValue() < 40) 
+    		else if (newValue.intValue() >= 15 && newValue.intValue() < 30) 
     			graphicsLabel.setText("Graphics: Low");
-    		else if (newValue.intValue() >= 40 && newValue.intValue() < 60) 
+    		else if (newValue.intValue() >= 30 && newValue.intValue() < 50) 
     			graphicsLabel.setText("Graphics: Medium");
-    		else if (newValue.intValue() >= 60 && newValue.intValue() < 80) 
+    		else if (newValue.intValue() >= 50 && newValue.intValue() < 65) 
     			graphicsLabel.setText("Graphics: High");
-    		else if (newValue.intValue() >= 80 && newValue.intValue() < 99)
+    		else if (newValue.intValue() >= 65 && newValue.intValue() < 80)
     			graphicsLabel.setText("Graphics: Very High");
-    		else
+    		else if (newValue.intValue() >= 80 && newValue.intValue() < 95)
     			graphicsLabel.setText("Graphics: Ultra");
+    		else
+    			graphicsLabel.setText("Graphics: Custom");
     		tweaks.set("graphics", graphicsLabel.getText().replaceAll("Graphics\\: ", ""));
         });
     	
@@ -296,7 +325,10 @@ public class Controller
 				loadSkin(tweaks.get("username"));
 				switchElementsState(true);
 			} catch (AuthenticationException e) {
-				// TODO Auto-generated catch block
+	     		String[] tableauChaine = {"Login Error,", "Please report this error,", "press escape to open the console", "then send a screenshot of it"};
+	     		setInfoPaneVisible();
+	     		setInfoText(tableauChaine, 4, 750);
+	        	System.out.print("Login Error, Please report this error, send a screenshot of this" + '\n' + e + '\n');
 			}
     	}
     	
@@ -309,7 +341,10 @@ public class Controller
                 		try {
                 			play(null);
                 		} catch (LaunchException | InterruptedException e) {
-                			// TODO Auto-generated catch block
+        		     		String[] tableauChaine = {"Launch Error,", "Please report this error,", "press escape to open the console", "then send a screenshot of it"};
+        		     		setInfoPaneVisible();
+        		     		setInfoText(tableauChaine, 4, 750);
+        		        	System.out.print("Launch Error, Please report this error, send a screenshot of this" + '\n' + e + '\n');
                 		}
                	}
                 else if (ke.getCode() == KeyCode.ESCAPE) 
@@ -317,8 +352,8 @@ public class Controller
             }
         });
     }
-    
-    private void defSettings() {
+
+	private void defSettings() {
     	
     	if (tweaks.get("username") == null)
     		tweaks.set("username", "");
@@ -338,15 +373,17 @@ public class Controller
     	if (tweaks.get("graphics").equals("Potatoe"))
     		graphicsSlider.valueProperty().set(0);
     	else if (tweaks.get("graphics").equals("Very Low"))
-    		graphicsSlider.valueProperty().set(15);
+    		graphicsSlider.valueProperty().set(7.5);
     	else if (tweaks.get("graphics").equals("Low"))
-    		graphicsSlider.valueProperty().set(30);
+    		graphicsSlider.valueProperty().set(22.5);
     	else if (tweaks.get("graphics").equals("Medium"))
-    		graphicsSlider.valueProperty().set(50);
+    		graphicsSlider.valueProperty().set(40);
     	else if (tweaks.get("graphics").equals("High"))
-    		graphicsSlider.valueProperty().set(70);
+    		graphicsSlider.valueProperty().set(57.5);
     	else if (tweaks.get("graphics").equals("Very High"))
-    		graphicsSlider.valueProperty().set(85);
+    		graphicsSlider.valueProperty().set(72.5);
+    	else if (tweaks.get("graphics").equals("Ultra"))
+    		graphicsSlider.valueProperty().set(87.5);
     	else
     		graphicsSlider.valueProperty().set(100);
     	
@@ -362,10 +399,11 @@ public class Controller
     		themeSlider.valueProperty().set(100);
 
     }
-    
+
 	@FXML
-    protected void logout() throws AuthenticationException {
-		// TODO 
+    private void logout() throws AuthenticationException {
+ 		String[] tableauChaine = {"Logout Success", "See you later !", "", ""};
+		setInfoText(tableauChaine, 3, 750);
     	System.out.print("Logout Succes, " + "See you later" + '\n');
 		Login.authInfos = new AuthInfos("", "", "");	
 		switchElementsState(false);
@@ -376,26 +414,60 @@ public class Controller
 		nameField.setText("");
 		passField.setText("");
     }
-
-	public void setInfoText(String stringList[]) {
+	
+	private void playInfo() throws InterruptedException {
 		new Thread(() -> {
 			try {
-				if (BarAPI.getNumberOfTotalBytesToDownload() != 0) {
-					while(Launch.inUpdate) {
-						setInfoLoading("Download in progress, please wait", "Download finished", 300);
-					}
+				Update.update();
+				inUpdate = false;
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
 				}
-				setInfoLoading("Starting the game, please wait", "Here you go ! Have fun !", 300);
-				while (stringList[is] != null) {
-					Platform.runLater(()-> 	infoLabel.setText(stringList[is]));
-					is++;
-					Thread.sleep(300);
-				}
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-			}
 		}).start();
+		try {
+			Presets.presetSet();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		}
+			while(inUpdate) {
+				setInfoLoading("Download and file check in progress, please wait", "Download and file check finished", 300);
+			}
+		setInfoLoading("Starting the game, please wait", "Here you go, Have fun !", 300);
 	}
+
+	private void setInfoText(String[] stringList, int size, int time) {
+		AtomicInteger sizeTS = new AtomicInteger(size);
+		if (isRunning.compareAndSet(true, true)) {
+			tryToRun.compareAndSet(false, true);
+			is.set(0);
+			Platform.runLater(()-> 	infoLabel.setText(""));
+		}
+			Thread t = new Thread(() -> {
+				isRunning.set(true);
+				try {
+					while (true) {
+						Platform.runLater(()-> 	infoLabel.setText(stringList[is.get()]));
+						Thread.sleep(time);
+						if (stringList[is.get()] == "" && stringList[is.get() - 1 ] == "") {
+							is.set(0);
+							Platform.runLater(()-> 	infoLabel.setText(""));
+							break;
+						}
+						if (tryToRun.get() == true)
+							break;
+						is.set(is.get() + 1);
+						if (is.get() == sizeTS.get())
+							is.set(0);
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+				}
+				is.set(0);
+				tryToRun.compareAndSet(true, false);
+			});
+		t.start();
+	}
+	
 
 	private void setInfoLoading(String string, String end, int time) throws InterruptedException {
 		Platform.runLater(()-> 	infoLabel.setText(string));
@@ -406,6 +478,36 @@ public class Controller
 		Thread.sleep(time);
 		Platform.runLater(()-> 	infoLabel.setText(string + "..."));
 		Thread.sleep(time);
-		Platform.runLater(()-> 	infoLabel.setText(""));
+		Platform.runLater(()-> 	infoLabel.setText(end));
+	}
+	private void noSpamButton() {
+		new Thread(() -> {
+			loginButton.setDisable(true);
+			logoutButton.setDisable(true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+			}
+			loginButton.setDisable(false);
+			logoutButton.setDisable(false);
+		}).start();
+	}
+	
+	private void showPing()
+	{
+		new Thread("Ping Updater"){
+			@Override
+			public void run() {
+				while (true) {
+					MinecraftPingReply data;
+					try {
+						data = new MinecraftPing().getPing(ipField.getText(), Integer.valueOf(portField.getText()));
+						Platform.runLater(()-> 	pingLabel.setText(data.getLatency() + "ms " + data.getPlayers().getOnline() + "/" + data.getPlayers().getMax() + " joueurs en ligne"));
+						Thread.sleep(100);
+					} catch (IOException e1) {} catch (InterruptedException e) {}
+				}
+			}
+		}.start();
 	}
 }

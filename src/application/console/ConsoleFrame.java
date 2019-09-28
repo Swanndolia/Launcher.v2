@@ -16,7 +16,7 @@ public class ConsoleFrame extends JFrame
     
     public ConsoleFrame()
     {
-    	setPreferredSize(new Dimension(500, 700));
+    	setPreferredSize(new Dimension(950, 700));
     	setTitle("Console - Launcher");
     	setVisible(false);
     	setLocation(100, 100);
