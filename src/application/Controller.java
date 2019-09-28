@@ -470,6 +470,11 @@ public class Controller
 	
 
 	private void setInfoLoading(String string, String end, int time) throws InterruptedException {
+		if (isRunning.compareAndSet(true, true)) {
+			tryToRun.compareAndSet(false, true);
+			is.set(0);
+			Platform.runLater(()-> 	infoLabel.setText(""));
+		}
 		Platform.runLater(()-> 	infoLabel.setText(string));
 		Thread.sleep(time);
 		Platform.runLater(()-> 	infoLabel.setText(string + "."));
