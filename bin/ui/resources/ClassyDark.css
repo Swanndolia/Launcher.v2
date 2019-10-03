@@ -15,6 +15,18 @@
 	-fx-text-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
 }
 
+#progress{
+	-fx-progress-color: #614895;
+}
+#progress .percentage{
+	-fx-font-size: 15px;
+	-fx-fill: #614895;
+}
+#progress .percentage:hover{
+	-fx-font-size: 15px;
+	-fx-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
+}
+
 #settingsSlider .track {
 	-fx-border-color: linear-gradient(to right top, #140a11, #130b13, #120d14, #100e15, #0f0f16, #0e1017, #0c1218, #0b1318, #0a1519, #091619, #091819, #0a1918);
 	-fx-border-width: 1;
@@ -45,7 +57,7 @@
 
 #settingsLabel {
 	-fx-font-size: 16px;
-	-fx-text-fill: #8888ff;
+	-fx-text-fill: #4f53a1;
 }
 #settingsLabel:hover {
 	-fx-text-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
@@ -59,7 +71,7 @@
 	-fx-font-size: 16px ;
 	-fx-background-color: rgba(100, 100, 100, 0.05);
 	-fx-background-radius: 70 30 70 30;
-	-fx-text-fill: #8888ff;
+	-fx-text-fill: #4f53a1;
 
 }
 #fields:hover {

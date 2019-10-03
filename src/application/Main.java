@@ -7,6 +7,7 @@ import club.minnced.discord.rpc.DiscordEventHandlers;
 import club.minnced.discord.rpc.DiscordRPC;
 import club.minnced.discord.rpc.DiscordRichPresence;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,19 +24,20 @@ public class Main extends Application {
     private double yOffset = 0;
 	
     public static Stage stage;
+    public static Scene scene;
 	public static DiscordRichPresence presence = new DiscordRichPresence();
     private static DiscordRPC lib = DiscordRPC.INSTANCE;
     
 	@Override
 	public void start(Stage primaryStage) throws IOException {
+		Platform.setImplicitExit(false);
 	   	URL url = getClass().getResource("/ui/resources/main.fxml");
 	   	FXMLLoader fxmlLoader = new FXMLLoader(url);
 	   	AnchorPane root = (AnchorPane) fxmlLoader.load();
-	    final Scene scene = new Scene(root, 1300, 700);
+	    scene = new Scene(root, 1300, 700);
 	    stage = primaryStage;
 	    stage.getIcons().add(new Image("/ui/resources/icon.png"));
 	    stage.setScene(scene);
-
 	    scene.setFill(Color.TRANSPARENT);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setTitle("azurpixel v4");
@@ -95,5 +97,4 @@ public class Main extends Application {
 			}, "RPC-Callback-Handler");
 			t.start();
 		}
-	  
 	}

@@ -19,7 +19,7 @@
   <Label fx:id="pingLabel" id="settingsLabel" text="" layoutX="50" layoutY="20"/>
   <TextField fx:id="nameField" id="fields" prefHeight="40" prefWidth="350" layoutX="50" layoutY="60.0" />
   <PasswordField fx:id="passField" id="fields" prefHeight="40" prefWidth="350" layoutX="50" layoutY="110.0" />
-  <TextField fx:id="ipField" id="fields" prefHeight="40" prefWidth="240" layoutX="50" layoutY="110" text="azurpixel.net" visible="false"  />
+  <TextField fx:id="ipField" id="fields" prefHeight="40" prefWidth="240" layoutX="50" layoutY="110" text="azurpixel.net" visible="false" />
   <TextField fx:id="portField" id="fields" prefHeight="40" prefWidth="100" layoutX="300" layoutY="110" text="25565" visible="false" />
   <Button fx:id="loginButton" id="play" layoutX="15" layoutY="140" text="Click to login" onAction="#login" />
   <Button fx:id="logoutButton" id="logout" layoutX="440" layoutY="170" text="" onAction="#logout" visible="false" />
@@ -32,7 +32,8 @@
 </AnchorPane>
 
 <AnchorPane fx:id="infoPane" id="settingsPane" prefHeight="370" prefWidth="470" layoutX="50" layoutY="230" visible="false" >
-<Label fx:id="infoLabel" id="settingsLabel" layoutX="50" layoutY="30"/>
+<Label fx:id="infoLabel" id="settingsLabel" layoutX="30" layoutY="30"/>
+<ProgressIndicator fx:id="pI" id="progress" layoutX="410" layoutY="30" prefHeight="30" prefWidth="30" visible="false" />
 </AnchorPane>
 
 <AnchorPane fx:id="settingsPane" id="settingsPane" prefHeight="370" prefWidth="470" layoutX="50" layoutY="230">
@@ -41,7 +42,7 @@
 <Label fx:id="graphicsLabel" id="settingsLabel" text="Graphics:" layoutX="50" layoutY="90" />
 <Slider fx:id="graphicsSlider" id="settingsSlider" layoutX="80" layoutY="115" prefWidth="300"/>
 <Label fx:id="memoryLabel" id="settingsLabel" text="Memory:" layoutX="50" layoutY="150" />
-<Slider fx:id="memorySlider" id="settingsSlider" layoutX="80" layoutY="175"  min="512" max="8096" prefWidth="300" 	snapToTicks="true" 	majorTickUnit="2"	minorTickCount="0" />
+<Slider fx:id="memorySlider" id="settingsSlider" layoutX="80" layoutY="175"  min="512" max="8096" prefWidth="300" snapToTicks="true" 	majorTickUnit="2"	minorTickCount="0" />
 <Label fx:id="themeLabel" id="settingsLabel" text="Theme:" layoutX="50" layoutY="210" />
 <Slider fx:id="themeSlider" id="settingsSlider" layoutX="80" layoutY="235" prefWidth="300"/>
 </AnchorPane>

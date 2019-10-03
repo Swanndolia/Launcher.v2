@@ -7,7 +7,8 @@ import Launcher.external.BeforeLaunchingEvent;
 import Launcher.external.ExternalLaunchProfile;
 import Launcher.external.ExternalLauncher;
 import Launcher.minecraft.GameFolder;
-import Launcher.minecraft.MinecraftLauncher;	
+import Launcher.minecraft.MinecraftLauncher;
+import javafx.application.Platform;	
 
 public class Launch {
 
@@ -35,7 +36,9 @@ public class Launch {
 					processBuilder.command().set(0, javaPath);
 			}
 		});
+		Platform.runLater(()-> 	Main.stage.hide());
 		int exitCode = launcher.launch().waitFor();
+		Platform.runLater(()-> 	Main.stage.show());
 		System.out.println("\nMinecraft finished with exit code " + exitCode);
 	}
 

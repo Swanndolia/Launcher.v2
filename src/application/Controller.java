@@ -18,6 +18,8 @@ import Launcher.minecraft.util.MinecraftPing.MinecraftPingReply;
 import Launcher.minecraft.util.Presets;
 import Launcher.util.Saver;
 import application.console.ConsoleFrame;
+import application.console.Debug;
+import fr.theshark34.supdate.BarAPI;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,6 +27,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -43,10 +46,16 @@ public class Controller
 	public static final File dir = infos.getGameDir();
 	public static Saver tweaks = new Saver(new File(dir, "AzurPixel.properties"));
 	private boolean inUpdate = true;
+	public boolean launched = false;
+	AtomicInteger sizeTS = new AtomicInteger();
 	private AtomicBoolean isRunning = new AtomicBoolean(false);
 	private AtomicBoolean tryToRun = new AtomicBoolean(false);
 	private AtomicInteger is = new AtomicInteger(0);
-	   
+	long progress = 0;
+	
+	@FXML
+	private ProgressIndicator pI = new ProgressIndicator();
+	
     @FXML
     private Slider memorySlider;
     
@@ -164,17 +173,18 @@ public class Controller
      		String[] tableauChaine = {"Login Error,", "Invalid username", "you should use only alphanumeric", "between 3 and 20 characters lenght"};
      		setInfoPaneVisible();
      		setInfoText(tableauChaine, 4, 750);
-        	System.out.print("Login Error, Invalid username, you should use only alphanumeric characters between 3 and 20 lenght" + '\n');
+        	System.out.print("Login Error, Invalid username, you should use only alphanumeric characters between 3 and 20 lenght\n");
 	    }
 	    else if (!nameField.getText().matches("^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$") && !passField.getText().isEmpty()) {
      		String[] tableauChaine = {"Login Error,", "Invalids forms,", "type only a username to login as crack,", "or use your mojang email and password."};
      		setInfoPaneVisible();
      		setInfoText(tableauChaine, 4, 750);
-        	System.out.print("Login Error," + "Invalids forms, type only a username to login as crack, or use your mojang email and password." + '\n');
+        	System.out.print("Login Error," + "Invalids forms, type only a username to login as crack, or use your mojang email and password.\n");
 	    }
 	    else {
 	    	try {
 	      		Login.tryLogin(nameField.getText(), passField.getText());
+				nameField.setText("Loged in as " + nameField.getText());
 	        	System.out.print("Login Succes, " + "Welcome " + Login.name + '\n');
 				loadSkin(Login.name);
 				if (keepLoginCheck.isVisible())
@@ -187,7 +197,7 @@ public class Controller
 	     		String[] tableauChaine = {"Login Error,", "Incorrect mail or password,", "if you don't have mojang account,", "just type a username without pass."};
 	     		setInfoPaneVisible();
 	     		setInfoText(tableauChaine, 4, 750);
-	     		System.out.print("Login Error, Incorrect mail or password if you don't have mojang account just type a username without pass." + '\n');
+	     		System.out.print("Login Error, Incorrect mail or password if you don't have mojang account just type a username without pass.\n");
 	       	}
 	    }
 	}
@@ -210,13 +220,11 @@ public class Controller
 					if (settingsPane.isVisible())
 						openSettings();
 					playInfo();
-					logoutButton.setDisable(true);
-					Launch.launch();
-				} catch (LaunchException | InterruptedException e) {
+				} catch (InterruptedException e) {
 		     		String[] tableauChaine = {"Launch Error,", "Please report this error,", "press escape to open the console", "then send a screenshot of it"};
 		     		setInfoPaneVisible();
 		     		setInfoText(tableauChaine, 4, 750);
-		        	System.out.print("Launch Error, Please report this error, send a screenshot of this" + '\n' + e + '\n');
+		        	System.out.print("Launch Error, Please report this error, send a screenshot of this\n" + e + '\n');
 				}
 			}
 		}.start();
@@ -258,11 +266,8 @@ public class Controller
     }
     
     public void initialize() {
-    	ConsoleFrame console = new ConsoleFrame();
-    	System.out.print("Azurpixel / Saber LLC Launcher console, send a full capture of this to report any bugs" + '\n');
-    	System.out.print("java version: " + System.getProperty("java.version") + '\n');
-    	System.out.print("os arch: " + System.getProperty("os.arch") + '\n');
-    	
+		ConsoleFrame console = new ConsoleFrame();
+    	Debug.displayDebug();
     	if (!System.getProperty("os.arch").contains("64"))
     		memorySlider.setMax(1024);
     	defSettings();
@@ -328,7 +333,7 @@ public class Controller
 	     		String[] tableauChaine = {"Login Error,", "Please report this error,", "press escape to open the console", "then send a screenshot of it"};
 	     		setInfoPaneVisible();
 	     		setInfoText(tableauChaine, 4, 750);
-	        	System.out.print("Login Error, Please report this error, send a screenshot of this" + '\n' + e + '\n');
+	        	System.out.print("Login Error, Please report this error, send a screenshot of this\n" + e + '\n');
 			}
     	}
     	
@@ -344,7 +349,7 @@ public class Controller
         		     		String[] tableauChaine = {"Launch Error,", "Please report this error,", "press escape to open the console", "then send a screenshot of it"};
         		     		setInfoPaneVisible();
         		     		setInfoText(tableauChaine, 4, 750);
-        		        	System.out.print("Launch Error, Please report this error, send a screenshot of this" + '\n' + e + '\n');
+        		        	System.out.print("Launch Error, Please report this error, send a screenshot of this\n" + e + '\n');
                 		}
                	}
                 else if (ke.getCode() == KeyCode.ESCAPE) 
@@ -402,9 +407,9 @@ public class Controller
 
 	@FXML
     private void logout() throws AuthenticationException {
- 		String[] tableauChaine = {"Logout Success", "See you later !", "", ""};
-		setInfoText(tableauChaine, 3, 750);
-    	System.out.print("Logout Succes, " + "See you later" + '\n');
+ 		String[] tableauChaine = {"Logout Success", "See you later !"};
+		setInfoText(tableauChaine, 2, 750);
+    	System.out.print("Logout Succes, " + "See you later\n");
 		Login.authInfos = new AuthInfos("", "", "");	
 		switchElementsState(false);
 		skin = new Image("/ui/resources/skin.png");
@@ -429,14 +434,12 @@ public class Controller
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 		}
-			while(inUpdate) {
-				setInfoLoading("Download and file check in progress, please wait", "Download and file check finished", 300);
-			}
-		setInfoLoading("Starting the game, please wait", "Here you go, Have fun !", 300);
+		setLoading("File check in progress, please wait", "File check finished", 300, inUpdate);
+		setLoading("Starting the game, please wait", "Here you go, Have fun !", 300, null);
 	}
 
 	private void setInfoText(String[] stringList, int size, int time) {
-		AtomicInteger sizeTS = new AtomicInteger(size);
+		sizeTS.set(size);
 		if (isRunning.compareAndSet(true, true)) {
 			tryToRun.compareAndSet(false, true);
 			is.set(0);
@@ -448,11 +451,6 @@ public class Controller
 					while (true) {
 						Platform.runLater(()-> 	infoLabel.setText(stringList[is.get()]));
 						Thread.sleep(time);
-						if (stringList[is.get()] == "" && stringList[is.get() - 1 ] == "") {
-							is.set(0);
-							Platform.runLater(()-> 	infoLabel.setText(""));
-							break;
-						}
 						if (tryToRun.get() == true)
 							break;
 						is.set(is.get() + 1);
@@ -462,29 +460,33 @@ public class Controller
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 				}
-				is.set(0);
 				tryToRun.compareAndSet(true, false);
 			});
 		t.start();
 	}
 	
-
-	private void setInfoLoading(String string, String end, int time) throws InterruptedException {
+	private void setLoading(String string, String end, int time, Object condition) throws InterruptedException {
 		if (isRunning.compareAndSet(true, true)) {
 			tryToRun.compareAndSet(false, true);
 			is.set(0);
 			Platform.runLater(()-> 	infoLabel.setText(""));
 		}
-		Platform.runLater(()-> 	infoLabel.setText(string));
-		Thread.sleep(time);
-		Platform.runLater(()-> 	infoLabel.setText(string + "."));
-		Thread.sleep(time);
-		Platform.runLater(()-> 	infoLabel.setText(string + ".."));
-		Thread.sleep(time);
-		Platform.runLater(()-> 	infoLabel.setText(string + "..."));
-		Thread.sleep(time);
+		pI.setVisible(true);
+		while(inUpdate) {
+			if(BarAPI.getNumberOfTotalBytesToDownload() != 0) {
+				progress = 100+((BarAPI.getNumberOfTotalDownloadedBytes()-BarAPI.getNumberOfTotalBytesToDownload())*100/BarAPI.getNumberOfTotalBytesToDownload());
+				new Thread(() -> {
+					Platform.runLater(()-> 	infoLabel.setText("Download in progress"));
+					Platform.runLater(()-> 	pI.setProgress(progress/100F));
+				}).start();
+			}
+			Platform.runLater(()-> 	infoLabel.setText(string));
+			Thread.sleep(100);
+		}
 		Platform.runLater(()-> 	infoLabel.setText(end));
+		pI.setVisible(false);
 	}
+	
 	private void noSpamButton() {
 		new Thread(() -> {
 			loginButton.setDisable(true);
@@ -508,7 +510,7 @@ public class Controller
 					MinecraftPingReply data;
 					try {
 						data = new MinecraftPing().getPing(ipField.getText(), Integer.valueOf(portField.getText()));
-						Platform.runLater(()-> 	pingLabel.setText(data.getLatency() + "ms " + data.getPlayers().getOnline() + "/" + data.getPlayers().getMax() + " joueurs en ligne"));
+						Platform.runLater(()-> 	pingLabel.setText(data.getLatency() + "ms " + data.getPlayers().getOnline() + "/" + data.getPlayers().getMax() + " players online"));
 						Thread.sleep(100);
 					} catch (IOException e1) {} catch (InterruptedException e) {}
 				}

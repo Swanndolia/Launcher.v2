@@ -9,6 +9,6 @@ public class Update {
 		su.getServerRequester().setRewriteEnabled(true);
 	
 		su.start();
-		
+		Launch.launch();
 	}
 }
