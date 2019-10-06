@@ -3,8 +3,11 @@ Optimized launcher with dynamic theme loading, support for 1.7 to 1.14 (integrat
 
 
 Website (french): https://azurpixel.net/
+
 Download: https://azurpixel.net/p/jouer
+
 Discord (french): https://discord.gg/BRESeuM
+
 Facebook (french): https://www.facebook.com/azurpixel
 
 If you want to use the sources, please ask me before, in any case if you want to use this or part of this work, you should credit me 
