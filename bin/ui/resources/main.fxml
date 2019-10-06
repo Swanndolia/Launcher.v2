@@ -10,56 +10,74 @@
 <?import javafx.scene.image.ImageView?>
 
 <AnchorPane fx:id="mainPane" id="mainPane" prefHeight="700" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="application.Controller">
-
   <Button id="close" layoutX="1253.0" layoutY="10.0" mnemonicParsing="false" text="" onAction="#appExit"/>
   <Button id="hide" layoutX="1253.0" layoutY="50.0" mnemonicParsing="false" text="" onAction="#appMinimize"/>
   <Button id="settings" layoutX="1253.0" layoutY="90.0" mnemonicParsing="false" text="" onAction="#openSettings"/>
 
-<AnchorPane fx:id="loginPane" id="loginPane" prefHeight="310" prefWidth="470">
-  <Label fx:id="pingLabel" id="settingsLabel" text="" layoutX="50" layoutY="20"/>
-  <TextField fx:id="nameField" id="fields" prefHeight="40" prefWidth="350" layoutX="50" layoutY="60.0" />
-  <PasswordField fx:id="passField" id="fields" prefHeight="40" prefWidth="350" layoutX="50" layoutY="110.0" />
-  <TextField fx:id="ipField" id="fields" prefHeight="40" prefWidth="240" layoutX="50" layoutY="110" text="azurpixel.net" visible="false" />
-  <TextField fx:id="portField" id="fields" prefHeight="40" prefWidth="100" layoutX="300" layoutY="110" text="25565" visible="false" />
-  <Button fx:id="loginButton" id="play" layoutX="15" layoutY="140" text="Click to login" onAction="#login" />
-  <Button fx:id="logoutButton" id="logout" layoutX="440" layoutY="170" text="" onAction="#logout" visible="false" />
-  <Button fx:id="playButton" id="play" layoutX="15" layoutY="140" text="Click to play" onAction="#play" visible="false" />
-  <Button fx:id="keepLogin" id="box" layoutX="400" layoutY="170" onAction="#keepLogin" text="Stay Log-in" visible="false" />
-  <Button fx:id="keepLoginCheck" id="boxChecked" layoutX="400" layoutY="170" onAction="#keepLogin" text="Stay Log-in" visible="false" />
-  <ImageView fx:id="imageView" layoutX="410" layoutY="45" fitHeight="120" fitWidth="120" pickOnBounds="true" preserveRatio="true">
-    <Image fx:id="skin" url="@skin.png"/>
-  </ImageView>
-</AnchorPane>
+  <AnchorPane fx:id="loginPane" id="loginPane" prefHeight="310" prefWidth="470">
+    <Label fx:id="pingLabel" id="settingsLabel" text="" layoutX="50" layoutY="20"/>
+    <TextField fx:id="nameField" id="fields" prefHeight="40" prefWidth="350" layoutX="50" layoutY="60.0" />
+    <PasswordField fx:id="passField" id="fields" prefHeight="40" prefWidth="350" layoutX="50" layoutY="110.0" />
+    <TextField fx:id="ipField" id="fields" prefHeight="40" prefWidth="240" layoutX="50" layoutY="110" text="azurpixel.net" visible="false" />
+    <TextField fx:id="portField" id="fields" prefHeight="40" prefWidth="100" layoutX="300" layoutY="110" text="25565" visible="false" />
+    <Button fx:id="loginButton" id="play" layoutX="15" layoutY="140" text="Click to login" onAction="#login" />
+    <Button fx:id="logoutButton" id="logout" layoutX="440" layoutY="170" text="" onAction="#logout" visible="false" />
+    <Button fx:id="playButton" id="play" layoutX="15" layoutY="140" text="Click to play" onAction="#play" visible="false" />
+    <Button fx:id="keepLogin" id="box" layoutX="400" layoutY="170" onAction="#keepLogin" text="Stay Log-in" visible="false" />
+    <Button fx:id="keepLoginCheck" id="boxChecked" layoutX="400" layoutY="170" onAction="#keepLogin" text="Stay Log-in" visible="false" />
+    <ImageView fx:id="skinView" layoutX="420" layoutY="50" pickOnBounds="true" preserveRatio="true">
+     <Image fx:id="skin" url="@skin.png"/>
+    </ImageView>
+  </AnchorPane>
 
-<AnchorPane fx:id="infoPane" id="settingsPane" prefHeight="370" prefWidth="470" layoutX="50" layoutY="230" visible="false" >
-<Label fx:id="infoLabel" id="settingsLabel" layoutX="30" layoutY="30"/>
-<ProgressIndicator fx:id="pI" id="progress" layoutX="410" layoutY="30" prefHeight="30" prefWidth="30" visible="false" />
-</AnchorPane>
+  <AnchorPane fx:id="userPane" id="settingsPane" prefHeight="370" prefWidth="470" layoutX="50" layoutY="230" >
+    <ImageView fx:id="profileView1" layoutX="20" layoutY="10" pickOnBounds="true" preserveRatio="true" visible="false" >
+     <Image fx:id="profile1" url="@noImage.png"/>
+    </ImageView>
+    <ImageView fx:id="profileView2" layoutX="20" layoutY="130" pickOnBounds="true" preserveRatio="true" visible="false" >
+     <Image fx:id="profile2" url="@noImage.png"/>
+    </ImageView>
+    <ImageView fx:id="profileView3" layoutX="185" layoutY="10" pickOnBounds="true" preserveRatio="true" visible="false" >
+     <Image fx:id="profile3" url="@noImage.png"/>
+    </ImageView>
+    <ImageView fx:id="profileView4" layoutX="185" layoutY="130" pickOnBounds="true" preserveRatio="true" visible="false" >
+     <Image fx:id="profile4" url="@noImage"/>
+    </ImageView>  
+    <ImageView fx:id="profileView5" layoutX="350" layoutY="10" pickOnBounds="true" preserveRatio="true" visible="false" >
+     <Image fx:id="profile5" url="@noImage.png"/>
+    </ImageView>
+    <ImageView fx:id="profileView6" layoutX="350" layoutY="130" pickOnBounds="true" preserveRatio="true" visible="false" >
+     <Image fx:id="profile6" url="@noImage.png"/>
+    </ImageView>
+  </AnchorPane>
 
-<AnchorPane fx:id="settingsPane" id="settingsPane" prefHeight="370" prefWidth="470" layoutX="50" layoutY="230">
-<Label fx:id="versionLabel" id="settingsLabel" text="Version:" layoutX="50" layoutY="30"/>
-<Slider fx:id="versionSlider" id="settingsSlider" layoutX="80" layoutY="55"  min="7" max="14" prefWidth="300" />
-<Label fx:id="graphicsLabel" id="settingsLabel" text="Graphics:" layoutX="50" layoutY="90" />
-<Slider fx:id="graphicsSlider" id="settingsSlider" layoutX="80" layoutY="115" prefWidth="300"/>
-<Label fx:id="memoryLabel" id="settingsLabel" text="Memory:" layoutX="50" layoutY="150" />
-<Slider fx:id="memorySlider" id="settingsSlider" layoutX="80" layoutY="175"  min="512" max="8096" prefWidth="300" snapToTicks="true" 	majorTickUnit="2"	minorTickCount="0" />
-<Label fx:id="themeLabel" id="settingsLabel" text="Theme:" layoutX="50" layoutY="210" />
-<Slider fx:id="themeSlider" id="settingsSlider" layoutX="80" layoutY="235" prefWidth="300"/>
-</AnchorPane>
+  <AnchorPane fx:id="settingsPane" id="settingsPane" prefHeight="370" prefWidth="470" layoutX="50" layoutY="230" visible="false" >
+    <Label fx:id="versionLabel" id="settingsLabel" text="Version:" prefWidth="470" layoutY="25" alignment="center" />
+    <Slider fx:id="versionSlider" id="settingsSlider" layoutX="85" layoutY="55"  min="7" max="14" prefWidth="300" />
+    <Label fx:id="graphicsLabel" id="settingsLabel" text="Graphics:" prefWidth="470" layoutY="95"  alignment="center" />
+    <Slider fx:id="graphicsSlider" id="settingsSlider" layoutX="85" layoutY="120" prefWidth="300"/>
+    <Label fx:id="memoryLabel" id="settingsLabel" prefWidth="470" layoutY="160" alignment="center" />
+    <Slider fx:id="memorySlider" id="settingsSlider" layoutX="85" layoutY="185"  min="512" max="8096" prefWidth="300" snapToTicks="true" 	majorTickUnit="2"	minorTickCount="0" />
+    <Label fx:id="themeLabel" id="settingsLabel" text="Theme:" prefWidth="470" layoutY="225" alignment="center" />
+    <Slider fx:id="themeSlider" id="settingsSlider" layoutX="85" layoutY="250" prefWidth="300" />
+    <Label fx:id="infoLabel" id="settingsLabel" prefWidth="470" layoutY="310" alignment="center" />
+    <ProgressIndicator fx:id="pI" id="progress" layoutX="410" layoutY="290" prefHeight="30" prefWidth="30" visible="false" />
+  </AnchorPane>
 
-<AnchorPane fx:id="navPane" id="navPane" prefHeight="45" prefWidth="700" layoutX="550" layoutY="50.0">
+  <AnchorPane fx:id="navPane" id="navPane" prefHeight="45" prefWidth="700" layoutX="550" layoutY="50.0">
 
-</AnchorPane>
-<AnchorPane fx:id="newsPane" id="newsPane" prefHeight="505" prefWidth="700.0" layoutX="550" layoutY="95.0">
+  </AnchorPane>
 
-</AnchorPane>
+  <AnchorPane fx:id="newsPane" id="newsPane" prefHeight="505" prefWidth="700.0" layoutX="550" layoutY="95.0">
 
-<AnchorPane fx:id="idkWhatPane" id="newsPane" prefHeight="505" prefWidth="700.0" layoutX="550" layoutY="95.0" visible="false">
+  </AnchorPane>
 
-</AnchorPane>
+  <AnchorPane fx:id="idkWhatPane" id="newsPane" prefHeight="505" prefWidth="700.0" layoutX="550" layoutY="95.0" visible="false">
 
-<AnchorPane fx:id="footerPane" id="footerPane" prefHeight="70" prefWidth="1300" layoutY="630" >
+  </AnchorPane>
+
+  <AnchorPane fx:id="footerPane" id="footerPane" prefHeight="70" prefWidth="1300" layoutY="630" >
  
-</AnchorPane>
+  </AnchorPane>
 
 </AnchorPane>

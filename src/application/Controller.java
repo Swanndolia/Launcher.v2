@@ -34,170 +34,142 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import openauth.AuthenticationException;
 
 public class Controller 
 
 {
+	private	ConsoleFrame console = new ConsoleFrame();
 	public static final String url = "https://azurpixel.net";
 	public static GameVersion version = new GameVersion("1.8", null);
 	public static GameInfos infos = new GameInfos("AzurPixel v4", version, null);
 	public static final File dir = infos.getGameDir();
-	public static Saver tweaks = new Saver(new File(dir, "AzurPixel.properties"));
-	private boolean inUpdate = true;
+	public static Saver tweaks = new Saver(new File(dir, "/profiles/AzurPixel.properties"));
+	private boolean inUpdate;
 	public boolean launched = false;
 	AtomicInteger sizeTS = new AtomicInteger();
 	private AtomicBoolean isRunning = new AtomicBoolean(false);
 	private AtomicBoolean tryToRun = new AtomicBoolean(false);
 	private AtomicInteger is = new AtomicInteger(0);
 	long progress = 0;
-	
+    private File profileFolder = new File(dir + "/profiles");
+    private String profileList[] = profileFolder.list();
+    
 	@FXML
 	private ProgressIndicator pI = new ProgressIndicator();
-	
     @FXML
     private Slider memorySlider;
-    
     @FXML
     private Label memoryLabel;
-    
     @FXML
     private Label infoLabel;
-    
     @FXML
     private Slider themeSlider;
-    
     @FXML
     private Label themeLabel;
-    
     @FXML
     private Slider versionSlider;
-    
     @FXML
     private Label versionLabel;
-    
     @FXML
     private Slider graphicsSlider;
-    
     @FXML
     private Label graphicsLabel;
-    
     @FXML
 	private Label pingLabel;
-
     @FXML
     private Label playerLabel;
-	
     @FXML
     private TextField nameField;
-
     @FXML
     private PasswordField passField;
-    
     @FXML
     private TextField ipField;
-    
+    @FXML
+    private Button newProfile;
     @FXML
     private TextField portField;
-
     @FXML
     private Button loginButton;
-    
     @FXML
     private Button keepLogin;
-    
     @FXML
     private Button keepLoginCheck;
-    
     @FXML
     private Button logoutButton;
-    
     @FXML
     private Button playButton;
-    
     @FXML
     private Image skin;
-    
     @FXML
-    private ImageView imageView;
-    
+    private ImageView skinView;
+    @FXML
+    private ImageView profileView1;
+    @FXML
+    private Image profile1;
+    @FXML
+    private ImageView profileView2;
+    @FXML
+    private Image profile2;
+    @FXML
+    private ImageView profileView3;
+    @FXML
+    private Image profile3;
+    @FXML
+    private ImageView profileView4;
+    @FXML
+    private Image profile4;
+    @FXML
+    private ImageView profileView5;
+    @FXML
+    private Image profile5;
+    @FXML
+    private ImageView profileView6;
+    @FXML
+    private Image profile6;
     @FXML
     public AnchorPane mainPane;
-    
     @FXML
     private AnchorPane settingsPane;
-    
     @FXML
-    private AnchorPane infoPane;
-    
+    private AnchorPane userPane;
     @FXML
     private AnchorPane newsPane;
-    
-	@FXML
-	private void appExit() 
-	{
-		System.exit(0);
-	}
-	
-	@FXML
-	private void appMinimize() 
-	{
-        Main.stage.setIconified(true);
-	}
-	
-	@FXML
-	private void openSettings() 
-	{
-		if (!settingsPane.isVisible()) {
-			settingsPane.setVisible(true);
-			infoPane.setVisible(false);
-		}
-		else {
-			settingsPane.setVisible(false);
-			infoPane.setVisible(true);
-		}
-	}
-	
-	private void setInfoPaneVisible() {
-		if (!infoPane.isVisible()) {
-			infoPane.setVisible(true);
-			settingsPane.setVisible(false);
-		}
-	}
 
 	@FXML
 	 private void login(ActionEvent event) {
 		noSpamButton();
 	    if (!nameField.getText().matches("^[A-Za-z0-9]{3,20}$") && passField.getText().isEmpty()) {
      		String[] tableauChaine = {"Login Error,", "Invalid username", "you should use only alphanumeric", "between 3 and 20 characters lenght"};
-     		setInfoPaneVisible();
-     		setInfoText(tableauChaine, 4, 750);
-        	System.out.print("Login Error, Invalid username, you should use only alphanumeric characters between 3 and 20 lenght\n");
+     		setSettingsPaneVisible();
+     		setInfoText(tableauChaine, 4, 1200);
+        	System.out.println("Login Error, Invalid username, you should use only alphanumeric characters between 3 and 20 lenght");
 	    }
 	    else if (!nameField.getText().matches("^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$") && !passField.getText().isEmpty()) {
      		String[] tableauChaine = {"Login Error,", "Invalids forms,", "type only a username to login as crack,", "or use your mojang email and password."};
-     		setInfoPaneVisible();
-     		setInfoText(tableauChaine, 4, 750);
-        	System.out.print("Login Error," + "Invalids forms, type only a username to login as crack, or use your mojang email and password.\n");
+     		setSettingsPaneVisible();
+     		setInfoText(tableauChaine, 4, 1200);
+        	System.out.println("Login Error," + "Invalids forms, type only a username to login as crack, or use your mojang email and password.");
 	    }
 	    else {
 	    	try {
 	      		Login.tryLogin(nameField.getText(), passField.getText());
-				nameField.setText("Loged in as " + nameField.getText());
-	        	System.out.print("Login Succes, " + "Welcome " + Login.name + '\n');
+				nameField.setText("Loged in as " + Login.name);
+	        	System.out.println("Login Succes, " + "Welcome " + Login.name);
 				loadSkin(Login.name);
 				if (keepLoginCheck.isVisible())
 					tweaks.set("username", Login.authInfos.getUsername());
 	     		String[] tableauChaine = {"Login Success,", "Welcome " + Login.name};
 				switchElementsState(true);
-	     		setInfoPaneVisible();
-	     		setInfoText(tableauChaine, 2, 750);
+	     		setSettingsPaneVisible();
+	     		setInfoText(tableauChaine, 2, 1200);
 	     	} catch (AuthenticationException e) {
 	     		String[] tableauChaine = {"Login Error,", "Incorrect mail or password,", "if you don't have mojang account,", "just type a username without pass."};
-	     		setInfoPaneVisible();
-	     		setInfoText(tableauChaine, 4, 750);
-	     		System.out.print("Login Error, Incorrect mail or password if you don't have mojang account just type a username without pass.\n");
+	     		setSettingsPaneVisible();
+	     		setInfoText(tableauChaine, 4, 1200);
+	     		System.out.println("Login Error, Incorrect mail or password if you don't have mojang account just type a username without pass.");
 	       	}
 	    }
 	}
@@ -222,36 +194,164 @@ public class Controller
 					playInfo();
 				} catch (InterruptedException e) {
 		     		String[] tableauChaine = {"Launch Error,", "Please report this error,", "press escape to open the console", "then send a screenshot of it"};
-		     		setInfoPaneVisible();
-		     		setInfoText(tableauChaine, 4, 750);
-		        	System.out.print("Launch Error, Please report this error, send a screenshot of this\n" + e + '\n');
+		     		setSettingsPaneVisible();
+		     		setInfoText(tableauChaine, 4, 1200);
+		        	System.out.println("Launch Error, Please report this error, send a screenshot of this\n" + e);
 				}
 			}
 		}.start();
 	}
-    @FXML
-	private void keepLogin(ActionEvent event) {
-    	if (keepLoginCheck.isVisible()) {
-    		keepLoginCheck.setVisible(false);
-    		keepLogin.setVisible(true);
-    	}
-    	else {
-    		keepLoginCheck.setVisible(true);
-			keepLogin.setVisible(false);
-    	}
-   }
-
-   private void loadSkin(String name) {
+	
+	@FXML
+	private void createNewProfile() {
+		int i;
+	    File profileFolder = new File(infos.getGameDir() + "/profiles"); 
+	    for (i = 1; i < profileList.length; i++) 
+	    	;
+	    if (i != 7 && Login.name != null){
+			String name = tweaks.get("username");
+			tweaks = new Saver(new File(dir, "/profiles/AzurPixel.properties"));
+	    	new File(dir, "/profiles/" + Login.name).mkdir();
+			tweaks.set("lastProfile", Login.name);
+			tweaks.set("username", "");
+		    String newList[] = profileFolder.list();
+		    profileList = newList;
+		    tweaks = new Saver(new File(dir, "/profiles/" + name + "/AzurPixel.properties"));
+			tweaks.set("username", name);
+	    	loadProfiles(newList);
+	    }
+	    // TODO DELETE PROFILE 
+	    // TODO AHHHHHHHHHHHHHHHHHHHHHHHISQDUFGHLSJKDHGBFJL
+	}
+	
+   private void loadProfiles(String[] profileList) {
 		new Thread(() -> {
 			try {
-				skin = new Image(new URL("https://mc-heads.net/head/" + name + "/120").openStream());
+				int ip = 0;
+			   	int i = 0;
+				while (true) {
+				    for (i = 0; i < profileList.length; i++) 
+				    	System.out.println("Profile " + i + ' ' + profileList[i]);
+					if(i == 0)
+						break;
+					skin = profile1;
+					if(++ip == i)
+						break;
+					profileView1.setVisible(true);
+					profile1 = new Image(new URL("https://mc-heads.net/head/" + profileList[ip] + "/100").openStream());
+					Platform.runLater(()-> 	profileView1.setImage(profile1));
+					System.out.println(i + "    " +  ip);
+					skin = profile2;
+					if(++ip == i)
+						break;
+					profileView2.setVisible(true);
+					profile2 = new Image(new URL("https://mc-heads.net/head/" + profileList[ip] + "/100").openStream());
+					Platform.runLater(()-> 	profileView2.setImage(profile2));;
+					System.out.println(i + "    " +  ip);
+					skin = profile3;
+					if(++ip == i)
+						break;
+					profileView3.setVisible(true);
+					profile3 = new Image(new URL("https://mc-heads.net/head/" + profileList[ip] + "/100").openStream());
+					Platform.runLater(()-> 	profileView3.setImage(profile3));
+					System.out.println(i + "    " +  ip);
+					skin = profile4;
+					if(++ip == i)
+						break;
+					profileView4.setVisible(true);
+					profile4 = new Image(new URL("https://mc-heads.net/head/" + profileList[ip] + "/100").openStream());
+					Platform.runLater(()-> 	profileView4.setImage(profile4));
+					skin = profile5;
+					if(++ip == i)
+						break;
+					profileView5.setVisible(true);
+					profile5 = new Image(new URL("https://mc-heads.net/head/" + profileList[ip] + "/100").openStream());
+					Platform.runLater(()-> 	profileView5.setImage(profile5));
+					skin = profile6;
+					if(++ip == i)
+						break;
+					profileView6.setVisible(true);
+					profile6 = new Image(new URL("https://mc-heads.net/head/" + profileList[ip] + "/100").openStream());
+					Platform.runLater(()-> 	profileView6.setImage(profile6));
+					break;
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 			}
-			Platform.runLater(()-> 	imageView.setImage(skin));
 		}).start();
+   }
+    
+    public void initialize() {
+    	Debug.displayDebug();
+    	if (!System.getProperty("os.arch").contains("64"))
+    		memorySlider.setMax(1024);
+		System.out.println(tweaks.get("lastProfile", ""));
+		tweaks = new Saver(new File(dir, "/profiles/" + tweaks.get("lastProfile", "") + "/AzurPixel.properties"));
+		checkRefresh(); 
+    	defSettings();
+    	showPing();
+    	addListener();
+		
+ 		loadProfiles(profileList);
     }
-   
+
+    private void refresh(Image image) {
+		Platform.runLater(()-> 	skinView.setImage(image));
+    	if (tweaks.get("username") == null)
+    		tweaks.set("username", "");
+    	if (tweaks.get("username").equals(""))
+    		keepLogin.setVisible(true);
+    	else {
+    		keepLoginCheck.setVisible(true);
+    		try {
+    			Login.refresh();
+    			nameField.setText("Loged in as " + tweaks.get("username"));
+    			switchElementsState(true);
+    		} catch (AuthenticationException e) {
+    			// TODO Auto-generated catch block
+    		}
+    	}
+    }
+    
+	private void checkRefresh() {
+    	if (tweaks.get("username") == null)
+    		tweaks.set("username", "");
+    	if (tweaks.get("username").equals(""))
+    		keepLogin.setVisible(true);
+    	else {
+    		System.out.println(tweaks.get("username"));
+    		keepLoginCheck.setVisible(true);
+		try {
+				Login.refresh();
+				nameField.setText("Loged in as " + tweaks.get("username"));
+				loadSkin(tweaks.get("username"));
+				switchElementsState(true);
+			} catch (AuthenticationException e) {
+	     		String[] tableauChaine = {"Login Error,", "Please report this error,", "press escape to open the console", "then send a screenshot of it"};
+	     		setSettingsPaneVisible();
+	     		setInfoText(tableauChaine, 4, 1200);
+	        	System.out.println("Login Error, Please report this error, send a screenshot of this\n" + e);
+			}
+    	}
+	}
+
+	@FXML
+    private void logout() {
+ 		String[] tableauChaine = {"Logout Success", "See you later !"};
+		setInfoText(tableauChaine, 2, 1200);
+    	System.out.println("Logout Succes, " + "See you later");
+		Login.authInfos = new AuthInfos("", "", "");	
+		switchElementsState(false);
+		skin = new Image("/ui/resources/skin.png");
+		skinView.setImage(skin);
+		tweaks.set("username", "");
+		tweaks.set("access-token", "");
+		nameField.setText("");
+		passField.setText("");
+        tweaks = new Saver(new File(dir, "/profiles/AzurPixel.properties"));
+        tweaks.set("lastProfile", "");
+    }
+	   
     private void switchElementsState(boolean loged) {
     	playButton.setVisible(loged);
     	logoutButton.setVisible(loged);
@@ -264,158 +364,10 @@ public class Controller
     	ipField.setVisible(loged);
     	portField.setVisible(loged);
     }
-    
-    public void initialize() {
-		ConsoleFrame console = new ConsoleFrame();
-    	Debug.displayDebug();
-    	if (!System.getProperty("os.arch").contains("64"))
-    		memorySlider.setMax(1024);
-    	defSettings();
-    	showPing();
-    	versionSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-
-    		versionLabel.setText("Version: 1." + Double.toString(newValue.intValue()).replaceAll(".0$", ""));
-    		tweaks.set("version", versionLabel.getText().replaceAll("[^0-9.]?", ""));
-        });
-    	
-    	memorySlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-
-    		memoryLabel.setText("Memory: " + Double.toString(newValue.intValue()).replaceAll(".0$", "") + " mb");
-    		tweaks.set("memory", memoryLabel.getText().replaceAll("[^0-9.]?", ""));
-        });
-
-    	graphicsSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-    		if (newValue.intValue() == 0) 
-        		graphicsLabel.setText("Graphics: Potatoe");
-    		else if (newValue.intValue() > 0 && newValue.intValue() < 15) 
-    			graphicsLabel.setText("Graphics: Very Low");
-    		else if (newValue.intValue() >= 15 && newValue.intValue() < 30) 
-    			graphicsLabel.setText("Graphics: Low");
-    		else if (newValue.intValue() >= 30 && newValue.intValue() < 50) 
-    			graphicsLabel.setText("Graphics: Medium");
-    		else if (newValue.intValue() >= 50 && newValue.intValue() < 65) 
-    			graphicsLabel.setText("Graphics: High");
-    		else if (newValue.intValue() >= 65 && newValue.intValue() < 80)
-    			graphicsLabel.setText("Graphics: Very High");
-    		else if (newValue.intValue() >= 80 && newValue.intValue() < 95)
-    			graphicsLabel.setText("Graphics: Ultra");
-    		else
-    			graphicsLabel.setText("Graphics: Custom");
-    		tweaks.set("graphics", graphicsLabel.getText().replaceAll("Graphics\\: ", ""));
-        });
-    	
-    	themeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-    		mainPane.getStylesheets().clear();
-        	if (newValue.intValue() >= 0 && newValue.intValue() < 20)
-        		tweaks.set("theme", "ClassyDark");
-        	else if (newValue.intValue() >= 20 && newValue.intValue() < 40)
-        		tweaks.set("theme", "HappyColor");
-        	else if (newValue.intValue() >= 40 && newValue.intValue() < 60)
-        		tweaks.set("theme", "BlueWaffle");
-        	else if (newValue.intValue() >= 60 && newValue.intValue() < 80)
-        		tweaks.set("theme", "PinkyPromise");
-        	else 
-        		tweaks.set("theme", "SweetWhite");
-        	themeLabel.setText("Theme: " + tweaks.get("theme"));
-			mainPane.getStylesheets().add("/ui/resources/" + tweaks.get("theme") + ".css");
-        });
-    	
-    	if (tweaks.get("username").equals(""))
-    		keepLogin.setVisible(true);
-    	else {
-    		keepLoginCheck.setVisible(true);
-		try {
-				Login.refresh();
-				nameField.setText("Loged in as " + tweaks.get("username"));
-				loadSkin(tweaks.get("username"));
-				switchElementsState(true);
-			} catch (AuthenticationException e) {
-	     		String[] tableauChaine = {"Login Error,", "Please report this error,", "press escape to open the console", "then send a screenshot of it"};
-	     		setInfoPaneVisible();
-	     		setInfoText(tableauChaine, 4, 750);
-	        	System.out.print("Login Error, Please report this error, send a screenshot of this\n" + e + '\n');
-			}
-    	}
-    	
-        mainPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
-                if (ke.getCode() == KeyCode.ENTER) {
-                	if (passField.isVisible()) {
-                		login(null);
-                	} else
-                		try {
-                			play(null);
-                		} catch (LaunchException | InterruptedException e) {
-        		     		String[] tableauChaine = {"Launch Error,", "Please report this error,", "press escape to open the console", "then send a screenshot of it"};
-        		     		setInfoPaneVisible();
-        		     		setInfoText(tableauChaine, 4, 750);
-        		        	System.out.print("Launch Error, Please report this error, send a screenshot of this\n" + e + '\n');
-                		}
-               	}
-                else if (ke.getCode() == KeyCode.ESCAPE) 
-                	console.setVisible(true);
-            }
-        });
-    }
-
-	private void defSettings() {
-    	
-    	if (tweaks.get("username") == null)
-    		tweaks.set("username", "");
-    	versionLabel.setText("Version: " + tweaks.get("version", "1.8"));
-    	memoryLabel.setText("Memory: " + tweaks.get("memory", "1024") + " mb");
-    	graphicsLabel.setText("Graphics: " + tweaks.get("graphics", "Medium"));
-    	themeLabel.setText("Theme: " + tweaks.get("theme", "ClassyDark"));
-		tweaks.set("version", versionLabel.getText().replaceAll("[^0-9.]?", ""));
-		tweaks.set("memory", memoryLabel.getText().replaceAll("[^0-9.]?", ""));
-		tweaks.set("graphics", graphicsLabel.getText().replaceAll("Graphics\\: ", ""));
-		tweaks.set("theme", themeLabel.getText().replaceAll("Theme\\: ", ""));
-		mainPane.getStylesheets().add("/ui/resources/" + tweaks.get("theme") + ".css");
-
-		versionSlider.valueProperty().set(Integer.valueOf(tweaks.get("version").replaceFirst("1.", "")));
-		memorySlider.valueProperty().set(Integer.valueOf(tweaks.get("memory")));
-		
-    	if (tweaks.get("graphics").equals("Potatoe"))
-    		graphicsSlider.valueProperty().set(0);
-    	else if (tweaks.get("graphics").equals("Very Low"))
-    		graphicsSlider.valueProperty().set(7.5);
-    	else if (tweaks.get("graphics").equals("Low"))
-    		graphicsSlider.valueProperty().set(22.5);
-    	else if (tweaks.get("graphics").equals("Medium"))
-    		graphicsSlider.valueProperty().set(40);
-    	else if (tweaks.get("graphics").equals("High"))
-    		graphicsSlider.valueProperty().set(57.5);
-    	else if (tweaks.get("graphics").equals("Very High"))
-    		graphicsSlider.valueProperty().set(72.5);
-    	else if (tweaks.get("graphics").equals("Ultra"))
-    		graphicsSlider.valueProperty().set(87.5);
-    	else
-    		graphicsSlider.valueProperty().set(100);
-    	
-    	if (tweaks.get("theme").equals("ClassyDark"))
-    		themeSlider.valueProperty().set(0);
-    	else if (tweaks.get("theme").equals("HappyColor"))
-    		themeSlider.valueProperty().set(30);
-    	else if (tweaks.get("theme").equals("BlueWaffle"))
-    		themeSlider.valueProperty().set(50);
-    	else if (tweaks.get("theme").equals("PinkyPromise"))
-    		themeSlider.valueProperty().set(70);
-    	else
-    		themeSlider.valueProperty().set(100);
-
-    }
-
-	@FXML
-    private void logout() throws AuthenticationException {
- 		String[] tableauChaine = {"Logout Success", "See you later !"};
-		setInfoText(tableauChaine, 2, 750);
-    	System.out.print("Logout Succes, " + "See you later\n");
+	
+    private void switchAccount() {
 		Login.authInfos = new AuthInfos("", "", "");	
 		switchElementsState(false);
-		skin = new Image("/ui/resources/skin.png");
-		imageView.setImage(skin);
-		tweaks.set("username", "");
-		tweaks.set("access-token", "");
 		nameField.setText("");
 		passField.setText("");
     }
@@ -423,8 +375,10 @@ public class Controller
 	private void playInfo() throws InterruptedException {
 		new Thread(() -> {
 			try {
+				inUpdate = true;
 				Update.update();
 				inUpdate = false;
+				Launch.launch();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 				}
@@ -440,7 +394,7 @@ public class Controller
 
 	private void setInfoText(String[] stringList, int size, int time) {
 		sizeTS.set(size);
-		if (isRunning.compareAndSet(true, true)) {
+		if (isRunning.get() == true) {
 			tryToRun.compareAndSet(false, true);
 			is.set(0);
 			Platform.runLater(()-> 	infoLabel.setText(""));
@@ -482,11 +436,260 @@ public class Controller
 			}
 			Platform.runLater(()-> 	infoLabel.setText(string));
 			Thread.sleep(100);
-		}
+			}
 		Platform.runLater(()-> 	infoLabel.setText(end));
 		pI.setVisible(false);
+		tryToRun.compareAndSet(true, false);
 	}
 	
+	private void addListener() {
+    	versionSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+
+    		versionLabel.setText("Version: 1." + Double.toString(newValue.intValue()).replaceAll(".0$", ""));
+    		tweaks.set("version", versionLabel.getText().replaceAll("[^0-9.]?", ""));
+        });
+    	
+    	memorySlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+
+    		memoryLabel.setText("Memory: " + Double.toString(newValue.intValue()).replaceAll(".0$", "") + " mb");
+    		tweaks.set("memory", memoryLabel.getText().replaceAll("[^0-9.]?", ""));
+        });
+
+    	graphicsSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+    		if (newValue.intValue() == 0) 
+        		graphicsLabel.setText("Graphics: Potatoe");
+    		else if (newValue.intValue() > 0 && newValue.intValue() < 15) 
+    			graphicsLabel.setText("Graphics: Very Low");
+    		else if (newValue.intValue() >= 15 && newValue.intValue() < 30) 
+    			graphicsLabel.setText("Graphics: Low");
+    		else if (newValue.intValue() >= 30 && newValue.intValue() < 50) 
+    			graphicsLabel.setText("Graphics: Medium");
+    		else if (newValue.intValue() >= 50 && newValue.intValue() < 65) 
+    			graphicsLabel.setText("Graphics: High");
+    		else if (newValue.intValue() >= 65 && newValue.intValue() < 80)
+    			graphicsLabel.setText("Graphics: Very High");
+    		else if (newValue.intValue() >= 80 && newValue.intValue() < 95)
+    			graphicsLabel.setText("Graphics: Ultra");
+    		else
+    			graphicsLabel.setText("Graphics: noNameDefined");
+    		tweaks.set("graphics", graphicsLabel.getText().replaceAll("Graphics\\: ", ""));
+        });
+    	
+    	themeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+    		mainPane.getStylesheets().clear();
+        	if (newValue.intValue() >= 0 && newValue.intValue() < 20)
+        		tweaks.set("theme", "ClassyDark");
+        	else if (newValue.intValue() >= 20 && newValue.intValue() < 40)
+        		tweaks.set("theme", "HappyColor");
+        	else if (newValue.intValue() >= 40 && newValue.intValue() < 60)
+        		tweaks.set("theme", "BlueWaffle");
+        	else if (newValue.intValue() >= 60 && newValue.intValue() < 80)
+        		tweaks.set("theme", "PinkyPromise");
+        	else 
+        		tweaks.set("theme", "SweetWhite");
+        	themeLabel.setText("Theme: " + tweaks.get("theme"));
+			mainPane.getStylesheets().add("/ui/resources/" + tweaks.get("theme") + ".css");
+        });
+    	
+        mainPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
+                if (ke.getCode() == KeyCode.ENTER) {
+                	if (passField.isVisible()) {
+                		login(null);
+                	} else
+                		try {
+                			play(null);
+                		} catch (LaunchException | InterruptedException e) {
+        		     		String[] tableauChaine = {"Launch Error,", "Please report this error,", "press escape to open the console", "then send a screenshot of it"};
+        		     		setSettingsPaneVisible();
+        		     		setInfoText(tableauChaine, 4, 1200);
+        		        	System.out.println("Launch Error, Please report this error, send a screenshot of this" + e);
+                		}
+               	}
+                else if (ke.getCode() == KeyCode.ESCAPE) 
+                	console.setVisible(true);
+            }
+        });
+        
+		skinView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			createNewProfile();
+	     });
+        
+		profileView1.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+	         System.out.println("Loading profile " + profileList[1]);
+	         tweaks = new Saver(new File(dir, "/profiles/AzurPixel.properties"));
+	         tweaks.set("lastProfile", profileList[1]);
+	     	 nameField.setText(profileList[1]);
+	     	 
+	 		 tweaks = new Saver(new File(dir, "/profiles/" + profileList[1] + "/AzurPixel.properties"));
+	     	 switchAccount();
+	 		 defSettings();
+	     	 refresh(profile1);
+
+	     });
+		
+		profileView2.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+	         System.out.println("Loading profile " + profileList[2]);
+	         tweaks = new Saver(new File(dir, "/profiles/AzurPixel.properties"));
+	         tweaks.set("lastProfile", profileList[2]);
+	     	 nameField.setText(profileList[2]);
+	     	 
+	 		 tweaks = new Saver(new File(dir, "/profiles/" + profileList[2] + "/AzurPixel.properties"));
+	     	 switchAccount();
+	     	 defSettings();
+	     	 refresh(profile2);
+	     	 
+	     });
+		
+		profileView3.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+	         System.out.println("Loading profile " + profileList[3]);
+	         tweaks = new Saver(new File(dir, "/profiles/AzurPixel.properties"));
+	         tweaks.set("lastProfile", profileList[3]);
+	     	 nameField.setText(profileList[3]);
+	     	 
+	 		 tweaks = new Saver(new File(dir, "/profiles/" + profileList[3] + "/AzurPixel.properties"));
+	     	 switchAccount();
+	     	 defSettings();
+	     	 refresh(profile3);
+	     	 
+	     });
+		
+		profileView4.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+	         System.out.println("Loading profile " + profileList[4]);
+	         tweaks = new Saver(new File(dir, "/profiles/AzurPixel.properties"));
+	         tweaks.set("lastProfile", profileList[4]);
+	     	 nameField.setText(profileList[4]);
+	     	 
+	 		 tweaks = new Saver(new File(dir, "/profiles/" + profileList[4] + "/AzurPixel.properties"));
+	     	 switchAccount();
+	     	 defSettings();
+	     	 refresh(profile4);
+	     	 
+	     });
+		
+		profileView5.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+	         System.out.println("Loading profile " + profileList[5]);
+	         tweaks = new Saver(new File(dir, "/profiles/AzurPixel.properties"));
+	         tweaks.set("lastProfile", profileList[5]);
+	     	 nameField.setText(profileList[5]);
+	     	 
+	 		 tweaks = new Saver(new File(dir, "/profiles/" + profileList[5] + "/AzurPixel.properties"));
+	     	 switchAccount();
+	     	 defSettings();
+	     	 refresh(profile5);
+	     	 
+	     });
+		
+		profileView6.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+	         System.out.println("Loading profile " + profileList[6]);
+	         tweaks = new Saver(new File(dir, "/profiles/AzurPixel.properties"));
+	         tweaks.set("lastProfile", profileList[6]);
+	     	 nameField.setText(profileList[6]);
+	     	 
+	 		 tweaks = new Saver(new File(dir, "/profiles/" + profileList[6] + "/AzurPixel.properties"));
+	     	 switchAccount();
+	     	 defSettings();
+	     	 refresh(profile6);
+	     	 
+	     });
+	}
+	
+	private void defSettings() {
+    	versionLabel.setText("Version: " + tweaks.get("version", "1.8"));
+    	memoryLabel.setText("Memory: " + tweaks.get("memory", "1024") + " mb");
+    	graphicsLabel.setText("Graphics: " + tweaks.get("graphics", "Medium"));
+    	themeLabel.setText("Theme: " + tweaks.get("theme", "ClassyDark"));
+		tweaks.set("version", versionLabel.getText().replaceAll("[^0-9.]?", ""));
+		tweaks.set("memory", memoryLabel.getText().replaceAll("[^0-9.]?", ""));
+		tweaks.set("graphics", graphicsLabel.getText().replaceAll("Graphics\\: ", ""));
+		tweaks.set("theme", themeLabel.getText().replaceAll("Theme\\: ", ""));
+		mainPane.getStylesheets().add("/ui/resources/" + tweaks.get("theme") + ".css");
+
+		versionSlider.valueProperty().set(Integer.valueOf(tweaks.get("version").replaceFirst("1.", "")));
+		memorySlider.valueProperty().set(Integer.valueOf(tweaks.get("memory")));
+		
+    	if (tweaks.get("graphics").equals("Potatoe"))
+    		graphicsSlider.valueProperty().set(0);
+    	else if (tweaks.get("graphics").equals("Very Low"))
+    		graphicsSlider.valueProperty().set(7.5);
+    	else if (tweaks.get("graphics").equals("Low"))
+    		graphicsSlider.valueProperty().set(22.5);
+    	else if (tweaks.get("graphics").equals("Medium"))
+    		graphicsSlider.valueProperty().set(40);
+    	else if (tweaks.get("graphics").equals("High"))
+    		graphicsSlider.valueProperty().set(57.5);
+    	else if (tweaks.get("graphics").equals("Very High"))
+    		graphicsSlider.valueProperty().set(72.5);
+    	else if (tweaks.get("graphics").equals("Ultra"))
+    		graphicsSlider.valueProperty().set(87.5);
+    	else
+    		graphicsSlider.valueProperty().set(100);
+    	
+    	if (tweaks.get("theme").equals("ClassyDark"))
+    		themeSlider.valueProperty().set(0);
+    	else if (tweaks.get("theme").equals("HappyColor"))
+    		themeSlider.valueProperty().set(30);
+    	else if (tweaks.get("theme").equals("BlueWaffle"))
+    		themeSlider.valueProperty().set(50);
+    	else if (tweaks.get("theme").equals("PinkyPromise"))
+    		themeSlider.valueProperty().set(70);
+    	else
+    		themeSlider.valueProperty().set(100);
+    }
+	
+	@FXML
+	private void appExit() 
+	{
+		System.exit(0);
+	}
+	
+	@FXML
+	private void appMinimize() 
+	{
+        Main.stage.setIconified(true);
+	}
+	
+	@FXML
+	private void openSettings() 
+	{
+		if (!settingsPane.isVisible()) {
+			settingsPane.setVisible(true);
+			userPane.setVisible(false);
+		}
+		else {
+			settingsPane.setVisible(false);
+			userPane.setVisible(true);
+		}
+	}
+	
+	private void setSettingsPaneVisible() {
+		settingsPane.setVisible(true);
+		userPane.setVisible(false);
+	}
+	
+    @FXML
+	private void keepLogin(ActionEvent event) {
+    	if (keepLoginCheck.isVisible()) {
+    		keepLoginCheck.setVisible(false);
+    		keepLogin.setVisible(true);
+    	}
+    	else {
+    		keepLoginCheck.setVisible(true);
+			keepLogin.setVisible(false);
+    	}
+   }
+
+   private void loadSkin(String name) {
+		new Thread(() -> {
+			try {
+				skin = new Image(new URL("https://mc-heads.net/head/" + name + "/100").openStream());
+				Platform.runLater(()-> 	skinView.setImage(skin));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+			}
+		}).start();
+    }
+   
 	private void noSpamButton() {
 		new Thread(() -> {
 			loginButton.setDisable(true);
@@ -517,4 +720,5 @@ public class Controller
 			}
 		}.start();
 	}
+   
 }

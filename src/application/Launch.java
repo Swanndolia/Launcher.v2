@@ -8,7 +8,8 @@ import Launcher.external.ExternalLaunchProfile;
 import Launcher.external.ExternalLauncher;
 import Launcher.minecraft.GameFolder;
 import Launcher.minecraft.MinecraftLauncher;
-import javafx.application.Platform;	
+import javafx.application.Platform;
+import openauth.AuthenticationException;	
 
 public class Launch {
 
@@ -39,6 +40,11 @@ public class Launch {
 		Platform.runLater(()-> 	Main.stage.hide());
 		int exitCode = launcher.launch().waitFor();
 		Platform.runLater(()-> 	Main.stage.show());
+		try {
+			Login.refresh();
+		} catch (AuthenticationException e) {
+			// TODO Auto-generated catch block
+		}
 		System.out.println("\nMinecraft finished with exit code " + exitCode);
 	}
 

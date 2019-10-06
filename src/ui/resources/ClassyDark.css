@@ -57,7 +57,7 @@
 
 #settingsLabel {
 	-fx-font-size: 16px;
-	-fx-text-fill: #4f53a1;
+	-fx-text-fill: #8888ff;
 }
 #settingsLabel:hover {
 	-fx-text-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
@@ -71,7 +71,7 @@
 	-fx-font-size: 16px ;
 	-fx-background-color: rgba(100, 100, 100, 0.05);
 	-fx-background-radius: 70 30 70 30;
-	-fx-text-fill: #4f53a1;
+	-fx-text-fill: #8888ff;
 
 }
 #fields:hover {
@@ -152,6 +152,12 @@
 	-fx-background-color: rgba(255, 255, 255, 0.04);
 }
 
+#newProfile {
+	-fx-graphic: url("newProfile.png");
+	-fx-font-size: 48px;
+	-fx-text-fill: linear-gradient(to top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
+}
+
 #settings {
 	-fx-graphic: url("settings.png");
 }
@@ -176,6 +182,10 @@
 	-fx-graphic: url("logout.png");
 }
 
+#newProfile:hover {
+	-fx-graphic: url("newProfile.png");
+}
+
 #settings:hover{
 	-fx-graphic: url("settingsHover.png");
 }
@@ -198,6 +208,11 @@
 
 #logout:hover {
 	-fx-graphic: url("logoutHover.png");
+}
+
+#newProfile:pressed {
+	-fx-scale-y: 0.9;
+	-fx-scale-x: 0.9;
 }
 
 #settings:pressed{
