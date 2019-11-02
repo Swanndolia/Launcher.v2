@@ -16,21 +16,20 @@ public class Presets {
 	
 	public static void presetSet() throws IOException {
 		
-		if (!new File(Controller.dir, "/servers.dat").isFile())
-			copyFile(new File(Controller.dir, "/presets/servers.dat"), new File(Controller.dir, "/servers.dat"));
-		if (!new File(Controller.dir, "/options.txt").isFile())
-			copyFile(new File(Controller.dir, "/presets/" + Controller.tweaks.get("version") + "/options.txt"), new File(Controller.dir, "/options.txt"));
-
 		if (new File(Controller.dir, "/options.txt").isFile() && new File(Controller.dir, "/presets/" + Controller.tweaks.get("version") + "/custom/options.txt").isFile()) {
 				replaceFile(new File(Controller.dir, "/options.txt"), new File(Controller.dir, "/presets/" + Controller.tweaks.get("version") + "/custom/options.txt"));
 				replaceFile(new File(Controller.dir, "/optionsof.txt"), new File(Controller.dir, "/presets/" + Controller.tweaks.get("version") + "/custom/optionsof.txt"));
 			}
 		
+		if (!new File(Controller.dir, "/servers.dat").isFile())
+			copyFile(new File(Controller.dir, "/presets/servers.dat"), new File(Controller.dir, "/servers.dat"));
+		if (!new File(Controller.dir, "/options.txt").isFile())
+			copyFile(new File(Controller.dir, "/presets/" + Controller.tweaks.get("version") + "/options.txt"), new File(Controller.dir, "/options.txt"));
+		
 		replaceFile(new File(Controller.dir, "/presets/" + Controller.tweaks.get("version") + '/' + Controller.tweaks.get("graphics") + "/optionsof.txt"), new File(Controller.dir, "/optionsof.txt"));
-
+		
 		File dirFrom = new File(Controller.dir, "/options.txt");
 		File tmp = new File(Controller.dir, "/tmp.txt");
-		tmp.deleteOnExit();
 		
 		BufferedReader fichier = new BufferedReader(new FileReader(dirFrom)); 
 		BufferedWriter fichierW = new BufferedWriter(new FileWriter(tmp)); 
@@ -50,6 +49,7 @@ public class Presets {
 		
 		Saver AP_OPTIONS = new Saver(tmp);
 		Saver AP_OPTIONSPRESET = new Saver(new File(Controller.dir, "/presets/" + Controller.tweaks.get("version") + '/' + Controller.tweaks.get("graphics") + "/options.txt"));
+		
 		AP_OPTIONS.set("renderDistance", AP_OPTIONSPRESET.get("renderDistance"));
 		AP_OPTIONS.set("particles", AP_OPTIONSPRESET.get("particles"));
 		AP_OPTIONS.set("fboEnable", AP_OPTIONSPRESET.get("fboEnable"));
@@ -74,6 +74,7 @@ public class Presets {
 		fichierW.close();  
 		fichier.close(); 
 		tmp.renameTo(dirFrom); 
+		new File(Controller.dir, "/tmp.txt").delete();
 	}
 	
 	public static void copyFile(File from, File to) throws IOException {
@@ -81,6 +82,6 @@ public class Presets {
 	} 
 	
 	public static void replaceFile(File from, File to) throws IOException {
-	    Files.copy( from.toPath(), to.toPath(), StandardCopyOption.REPLACE_EXISTING);
+	    Files.copy(from.toPath(), to.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	} 
 }

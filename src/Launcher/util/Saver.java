@@ -7,7 +7,7 @@ import java.io.FileWriter;
 import java.util.Properties;
 
 public class Saver {
-	
+
 	private File file;
 	private Properties properties;
     public Saver(File fileName)
@@ -28,7 +28,7 @@ public class Saver {
 	{
 	    return properties.getProperty(key);
 	}
-	   
+
 	public String get(String key, String def)
 	{
 	    String value = properties.getProperty(key);

@@ -14,7 +14,7 @@ public class Login {
 	public static String name;
 	
 	public static void tryLogin(String user, String pass) throws AuthenticationException {
-		if(pass.length() == 0) {
+		if(pass.length() == 0) { 
 			authInfos = new AuthInfos(user, "sry", "nope");
 			name = user;
 		}
@@ -27,12 +27,15 @@ public class Login {
 		}
 	}
 	public static void refresh() throws AuthenticationException {
-		if (Controller.tweaks.get("access-token", "").equals("")) 
-			authInfos = new AuthInfos(Controller.tweaks.get("username"), "sry", "nope");	
+		if (Controller.tweaks.get("access-token", "").equals("")) {
+			authInfos = new AuthInfos(Controller.tweaks.get("username"), "sry", "nope");
+			name = Controller.tweaks.get("username");
+		}
 		else {
 			RefreshResponse rep = new Authenticator("https://authserver.mojang.com/", AuthPoints.NORMAL_AUTH_POINTS).refresh(Controller.tweaks.get("access-token"), Controller.tweaks.get("client-token"));
 			authInfos = new AuthInfos(rep.getSelectedProfile().getName(), rep.getAccessToken(), rep.getSelectedProfile().getId());
 			Controller.tweaks.set("access-token", rep.getAccessToken());
+			name = rep.getSelectedProfile().getName();
 		}
 	}
 }

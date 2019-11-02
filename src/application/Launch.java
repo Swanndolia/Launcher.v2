@@ -38,8 +38,10 @@ public class Launch {
 			}
 		});
 		Platform.runLater(()-> 	Main.stage.hide());
+		Controller.isLaunched = true;
 		int exitCode = launcher.launch().waitFor();
 		Platform.runLater(()-> 	Main.stage.show());
+		Controller.isLaunched = false;
 		try {
 			Login.refresh();
 		} catch (AuthenticationException e) {
