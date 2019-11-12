@@ -9,14 +9,14 @@
 
 #play{
 	-fx-font-size: 48px;
-	-fx-text-fill: linear-gradient(to top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
+	-fx-text-fill: #70a1ff;
 }
 #play:hover{
 	-fx-text-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
 }
 
 .progress-bar {
-    -fx-border-color: #7A7D80;
+    -fx-border-color: #57606f;
     -fx-border-radius: 30;
  
 }
@@ -29,50 +29,50 @@
 }
 
 #settingsSlider .track {
-	-fx-border-color: #7A7D80;
+	-fx-border-color: #57606f;
 	-fx-border-width: 1;
     -fx-border-radius: 70 20 70 20;
     -fx-background-color: transparent;
 }
 #settingsSlider:hover .track {
-	-fx-border-color: #7A7D80
+	-fx-border-color: #747d8c
 }
 #settingsSlider:focused:hover .track {
-	-fx-border-color: #7A7D80;
+	-fx-border-color: #747d8c;
 }
 
 #settingsSlider .thumb {
     -fx-pref-height: 10;
     -fx-pref-width: 20;
     -fx-background-color: transparent;
-    -fx-border-color: #7A7D80;
+    -fx-border-color: #747d8c;
     -fx-border-width: 1;
 	-fx-border-radius: 70 30 70 30;
 }
 #settingsSlider:hover .thumb {
-    -fx-border-color: #7A7D80;
+    -fx-border-color: #747d8c;
 }
 #settingsSlider:hover:focused .thumb {
-    -fx-border-color: #7A7D80;
+    -fx-border-color: #747d8c;
 }
 
 #settingsLabel {
 	-fx-font-size: 16px;
-	-fx-text-fill: #8888ff;
+	-fx-text-fill: #70a1ff;
 }
 #settingsLabel:hover {
 	-fx-text-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
 }
 
 #fields {
-	-fx-border-color: #7A7D80;
+	-fx-border-color: #57606f;
 	-fx-border-width: 0.85;
     -fx-border-radius: 70 30 70 30;
 	-fx-skin: 'ui.animations.FieldAnim';
 	-fx-font-size: 16px ;
 	-fx-background-color: rgba(100, 100, 100, 0.05);
 	-fx-background-radius: 70 30 70 30;
-	-fx-text-fill: #8888ff;
+	-fx-text-fill: #70a1ff;
 
 }
 #fields:hover {
@@ -81,86 +81,90 @@
     -fx-border-radius: 70 30 70 30;
     -fx-border-insets: -2 -2 -2 -2;
     -fx-background-insets: -2 -2 -2 -2;
-	-fx-background-color: rgba(255, 255, 255, 0.15);
+	-fx-background-color: rgba(255, 255, 255, 0.07);
 	-fx-background-radius: 70 30 70 30;
-	-fx-text-fill: linear-gradient(to top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
-	-fx-border-color: #7A7D80;
+	-fx-text-fill: #70a1ff;
+	-fx-border-color: #57606f;
 }
 #fields:focused {
 	-fx-skin: 'ui.animations.FieldAnim';
-	-fx-border-color: #7A7D80;
+	-fx-border-color: #57606f;
     -fx-border-width: 1.5;
     -fx-border-radius: 70 30 70 30;
     -fx-border-insets: -2 -2 -2 -2;
 	-fx-font-size: 18px;
 	-fx-background-insets: -2 -2 -2 -2;
-	-fx-background-color: rgba(255, 255, 255, 0.15);
+	-fx-background-color: rgba(255, 255, 255, 0.07);
 	-fx-background-radius: 70 30 70 30;
 	-fx-text-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
 }
 
 #mainPane {
 	-fx-background-radius: 70 30 70 30;
-	-fx-background-color: #232629;
+	-fx-background-color: #2c2c54;
 }
 
 #newsPane {
 	-fx-background-radius: 0 0 45 45;
-	-fx-background-color: rgba(50, 55, 60, 0.25);
+	-fx-background-color: rgba(120, 111, 166, 0.125);
 	-fx-border-radius: 0 0 45 45;
-	-fx-border-color: #7A7D80;
+	-fx-border-color: #57606f;
     -fx-border-width: 0.4;
 }
 #newsPane:hover {
 	-fx-background-radius: 0 0 45 45;
-	-fx-background-color: rgba(50, 55, 60, 0.3);
-	-fx-border-color: #7A7D80;
+	-fx-background-color: rgba(120, 111, 166, 0.15);
+	-fx-border-color: #57606f;
 }
 
 #navPane {
 	-fx-background-radius: 45 45 0 0;
 	-fx-border-radius: 45 45 0 0;
-	-fx-background-color: rgba(50, 55, 60, 0.25);
-	-fx-border-color: #7A7D80;
+	-fx-background-color: rgba(120, 111, 166, 0.125);
+	-fx-border-color: #57606f;
     -fx-border-width: 0.4;
 }
 #navPane:hover {
 	-fx-background-radius: 45 45 0 0;
-	-fx-background-color: rgba(50, 55, 60, 0.3);
-	-fx-border-color: #7A7D80;
+	-fx-background-color: rgba(120, 111, 166, 0.15);
+	-fx-border-color: #57606f;
 }
 
 #settingsPane {
 	-fx-border-radius: 45 45 45 45;
 	-fx-background-radius: 45 45 45 45;
-	-fx-background-color: rgba(50, 55, 60, 0.25);
-	-fx-border-color: #7A7D80;
+	-fx-background-color: rgba(120, 111, 166, 0.125);
+	-fx-border-color: #57606f;
     -fx-border-width: 0.2;
 }
 #settingsPane:hover {
 	-fx-background-radius: 45 45 45 45;
-	-fx-background-color: rgba(50, 55, 60, 0.3);
-	-fx-border-color: #7A7D80;
+	-fx-background-color: rgba(120, 111, 166, 0.15);
+	-fx-border-color: #57606f;
 }
 
 #headerPane {
 	-fx-background-radius: 70 30 0 0;
-	-fx-background-color: rgba(50, 55, 60, 0.4);
+	-fx-background-color: rgba(120, 111, 166, 0.2);
 }
 
 #footerPane {
 	-fx-background-radius: 0 0 70 30;
-	-fx-background-color: rgba(50, 55, 60, 0.2);
+	-fx-background-color: rgba(120, 111, 166, 0.1);
 }
 
 #switchAccount {
 	-fx-graphic: url("switchAccount.png");
 	-fx-font-size: 48px;
-	-fx-text-fill: linear-gradient(to top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
+	-fx-text-fill: #70a1ff;
 }
 
 #settings {
 	-fx-graphic: url("settings.png");
+}
+
+#lang {
+	-fx-graphic: url("lang.png");
 }
 
 #hide {
@@ -221,6 +225,11 @@
 	-fx-scale-x: 0.9;
 }
 
+#lang:pressed{
+	-fx-scale-y: 0.9;
+	-fx-scale-x: 0.9;
+}
+
 #hide:pressed {
 	-fx-scale-y: 0.9;
 	-fx-scale-x: 0.9;
@@ -249,7 +258,7 @@
 #box {
 	-fx-graphic: url("box.png");
 	-fx-font-size: 15px;
-	-fx-text-fill: linear-gradient(to top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
+	-fx-text-fill: #70a1ff;
 }
 #box:hover{
 	-fx-text-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
@@ -258,7 +267,7 @@
 #boxChecked {
 	-fx-graphic: url("boxChecked.png");
 	-fx-font-size: 15px;
-	-fx-text-fill: linear-gradient(to top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
+	-fx-text-fill: #70a1ff;
 }
 #boxChecked:hover{
 	-fx-text-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);

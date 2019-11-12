@@ -171,6 +171,10 @@
 	-fx-graphic: url("close.png");
 }
 
+#lang {
+	-fx-graphic: url("lang.png");
+}
+
 #login {
 	-fx-graphic: url("login.png");
 }
