@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -68,6 +69,8 @@ public class Main extends Application {
 	public static void main(String[] args) throws IOException {
 		if (!Controller.dir.exists()) 
 			  Controller.dir.mkdir();
+		if (!new File(Controller.dir + "/profiles").exists())
+			new File(Controller.dir + "/profiles").mkdir();
 		String applicationId = "617320590570815498";
 		String steamId = "";
 		DiscordEventHandlers handlers = new DiscordEventHandlers();
