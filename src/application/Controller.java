@@ -670,7 +670,7 @@ public class Controller
 	private void defSettings() {
 		versionLabel.setText(versionBase.replaceFirst("1.", "") + tweaks.get("version", "1.8"));
 		memoryLabel.setText(memoryBase + tweaks.get("memory", "1024") + " mb");
-		graphicsLabel.setText(graphicsBase + tweaks.get("graphics", "Medium"));
+		graphicsLabel.setText(graphicsBase + tweaks.get("graphics", "Custom"));
 		themeLabel.setText(themeBase + tweaks.get("theme", "ClassyDark"));
 		tweaks.set("version", versionLabel.getText().replaceAll("[^0-9.]?", ""));
 		tweaks.set("memory", memoryLabel.getText().replaceAll("[^0-9.]?", ""));

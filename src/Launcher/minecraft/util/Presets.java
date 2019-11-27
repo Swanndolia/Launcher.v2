@@ -187,7 +187,7 @@ public class Presets {
 		controls.set("mouseSensitivity", "0.5");
 		controls.set("fov", "0.0");
 		controls.set("maxFps", "260");
-		controls.set("lang", Controller.tweaks.get("lang"));
+		controls.set("lang", Controller.tweaks.get("lang", "en"));
 	}
 
 	private static void controlsFirstSet13() {
@@ -244,6 +244,6 @@ public class Presets {
 		controls.set("mouseSensitivity", "0.5");
 		controls.set("fov", "0.0");
 		controls.set("maxFps", "260");
-		controls.set("lang", Controller.tweaks.get("lang"));
+		controls.set("lang", Controller.tweaks.get("lang", "en"));
 	}
 }
