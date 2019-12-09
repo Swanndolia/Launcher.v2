@@ -549,7 +549,7 @@ public class Controller
 		BarAPI.setNumberOfDownloadedFiles(0);
 		progress = 0;
 		Platform.runLater(() -> infoLabel.setText(end));
-
+		Platform.runLater(() -> pI.setVisible(false));
 		tryToRun.compareAndSet(true, false);
 	}
 
@@ -741,7 +741,7 @@ public class Controller
 		});
 		discordView.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
 			 try {
-				Desktop.getDesktop().browse(new URI("https://www.discord.gg/azurpixel"));
+				Desktop.getDesktop().browse(new URI("https://www.discord.me/azurpixel"));
 			} catch (IOException | URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -1027,7 +1027,7 @@ public class Controller
 		tweaks = backup;
 		setInfoText(langS, 1, 1800);
 		Platform.runLater(() -> copyrightLabel.setText(copyright));
-		Platform.runLater(() -> copyrightLabel.setText(success));
+		Platform.runLater(() -> successLabel.setText(success));
 		versionLabel.setText(versionBase.replaceFirst("1.", "") + tweaks.get("version", "1.8"));
 		memoryLabel.setText(memoryBase + tweaks.get("memory", "1024") + " mb");
 		graphicsLabel.setText(graphicsBase + tweaks.get("graphics", "Medium"));

@@ -9,10 +9,10 @@
 
 #play{
 	-fx-font-size: 48px;
-	-fx-text-fill: linear-gradient(to top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
+	-fx-text-fill: gray;
 }
 #play:hover{
-	-fx-text-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
+	-fx-text-fill: #8888ff;
 }
 
 .progress-bar {
@@ -58,10 +58,10 @@
 
 #settingsLabel {
 	-fx-font-size: 16px;
-	-fx-text-fill: #8888ff;
+	-fx-text-fill: gray;
 }
 #settingsLabel:hover {
-	-fx-text-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
+	-fx-text-fill: #8888ff;
 }
 
 #fields {
@@ -72,7 +72,7 @@
 	-fx-font-size: 16px ;
 	-fx-background-color: rgba(100, 100, 100, 0.05);
 	-fx-background-radius: 70 30 70 30;
-	-fx-text-fill: #8888ff;
+	-fx-text-fill: gray;
 
 }
 #fields:hover {
@@ -83,7 +83,7 @@
     -fx-background-insets: -2 -2 -2 -2;
 	-fx-background-color: rgba(255, 255, 255, 0.15);
 	-fx-background-radius: 70 30 70 30;
-	-fx-text-fill: linear-gradient(to top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
+	-fx-text-fill: gray;
 	-fx-border-color: linear-gradient(to right top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
 }
 #fields:focused {
@@ -96,7 +96,7 @@
 	-fx-background-insets: -2 -2 -2 -2;
 	-fx-background-color: rgba(255, 255, 255, 0.15);
 	-fx-background-radius: 70 30 70 30;
-	-fx-text-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
+	-fx-text-fill: #8888ff;
 }
 
 #mainPane {
@@ -154,7 +154,7 @@
 #switchAccount {
 	-fx-graphic: url("switchAccount.png");
 	-fx-font-size: 48px;
-	-fx-text-fill: linear-gradient(to top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
+	-fx-text-fill: gray;
 }
 
 #settings {
@@ -251,19 +251,19 @@
 #box {
 	-fx-graphic: url("box.png");
 	-fx-font-size: 15px;
-	-fx-text-fill: linear-gradient(to top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
+	-fx-text-fill: gray;
 }
 #box:hover{
-	-fx-text-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
+	-fx-text-fill: #8888ff;
 }
 
 #boxChecked {
 	-fx-graphic: url("boxChecked.png");
 	-fx-font-size: 15px;
-	-fx-text-fill: linear-gradient(to top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
+	-fx-text-fill: gray;
 }
 #boxChecked:hover{
-	-fx-text-fill: linear-gradient(to top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
+	-fx-text-fill: #8888ff;
 }
 
 #test {
