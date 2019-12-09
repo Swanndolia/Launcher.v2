@@ -1,7 +1,10 @@
 package application;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -64,11 +67,14 @@ public class Controller
 	private String[] loginS;
 	private String[] loginRS;
 	private String[] logoutS;
+	private String[] tipsList;
 	private String[] IMail;
 	private String[] ELaunch;
 	private String[] langS;
 	private String[] EFile;
 	private String versionBase;
+	private String copyright;
+	private String success;
 	private String memoryBase;
 	private String graphicsBase;
 	private String themeBase;
@@ -87,6 +93,8 @@ public class Controller
 	@FXML
 	private Label memoryLabel;
 	@FXML
+	private Label copyrightLabel;
+	@FXML
 	private Label infoLabel;
 	@FXML
 	private Slider themeSlider;
@@ -103,7 +111,11 @@ public class Controller
 	@FXML
 	private Label pingLabel;
 	@FXML
+	private Label successLabel;
+	@FXML
 	private Label playerLabel;
+	@FXML
+	private Label tipsLabel;
 	@FXML
 	private TextField nameField;
 	@FXML
@@ -145,6 +157,14 @@ public class Controller
 	@FXML
 	private ImageView skinView;
 	@FXML
+	private ImageView facebookView;
+	@FXML
+	private ImageView twitterView;
+	@FXML
+	private ImageView discordView;
+	@FXML
+	private ImageView youtubeView;
+	@FXML
 	private ImageView profileView1;
 	@FXML
 	private Image profile1;
@@ -173,9 +193,7 @@ public class Controller
 	@FXML
 	private AnchorPane settingsPane;
 	@FXML
-	private AnchorPane userPane;
-	@FXML
-	private AnchorPane newsPane;
+	private AnchorPane profilesPane;
 
 	@FXML
 	private void login(ActionEvent event) {
@@ -342,12 +360,15 @@ public class Controller
 		} else
 			english();
 		Debug.displayDebug();
+		Platform.runLater(() -> copyrightLabel.setText(copyright));
+		Platform.runLater(() -> successLabel.setText(success));
 		if (!System.getProperty("os.arch").contains("64"))
 			memorySlider.setMax(1024);
 		System.out.println("Last profile: " + tweaks.get("lastProfile", ""));
 		tweaks = new Saver(new File(dir, "/profiles/" + tweaks.get("lastProfile", "") + "/AzurPixel.properties"));
 		checkRefresh();
 		defSettings();
+		showTips();
 		showPing();
 		addListener();
 		loadProfiles(profileList);
@@ -467,12 +488,12 @@ public class Controller
 				// TODO Auto-generated catch block
 			}
 		}).start();
-		Presets.presetSet();
 		setLoading(checkS, checkE, 300, inUpdate);
 		setLoading(starting, started, 300, null);
 		switchFieldState(false);
 		passField.setDisable(true);
 		nameField.setDisable(true);
+		Presets.presetSet();
 	}
 
 	private void setInfoText(String[] stringList, int size, int time) {
@@ -512,7 +533,7 @@ public class Controller
 			is.set(0);
 			Platform.runLater(() -> infoLabel.setText(""));
 		}
-		pI.setVisible(true);
+		Platform.runLater(() -> pI.setVisible(true));
 		while (inUpdate) {
 			if (BarAPI.getNumberOfTotalBytesToDownload() != 0) {
 				progress = 100 - ((BarAPI.getNumberOfFileToDownload() - BarAPI.getNumberOfDownloadedFiles()) * 100
@@ -528,11 +549,107 @@ public class Controller
 		BarAPI.setNumberOfDownloadedFiles(0);
 		progress = 0;
 		Platform.runLater(() -> infoLabel.setText(end));
-		pI.setVisible(false);
+
 		tryToRun.compareAndSet(true, false);
 	}
 
 	private void addListener() {
+		skinView.setOnMouseEntered((MouseEvent t) -> {
+			skinView.setScaleX(1.25);
+			skinView.setScaleY(1.25);
+		});
+		skinView.setOnMouseExited((MouseEvent t) -> {
+			skinView.setScaleX(1);
+			skinView.setScaleY(1);
+		});
+		facebookView.setOnMouseEntered((MouseEvent t) -> {
+			facebookView.setScaleX(1.25);
+			facebookView.setScaleY(1.25);
+		});
+		facebookView.setOnMouseExited((MouseEvent t) -> {
+			facebookView.setScaleX(1);
+			facebookView.setScaleY(1);
+		});
+		twitterView.setOnMouseEntered((MouseEvent t) -> {
+			twitterView.setScaleX(1.25);
+			twitterView.setScaleY(1.25);
+		});
+		twitterView.setOnMouseExited((MouseEvent t) -> {
+			twitterView.setScaleX(1);
+			twitterView.setScaleY(1);
+		});
+		discordView.setOnMouseEntered((MouseEvent t) -> {
+			discordView.setScaleX(1.25);
+			discordView.setScaleY(1.25);
+		});
+		discordView.setOnMouseExited((MouseEvent t) -> {
+			discordView.setScaleX(1);
+			discordView.setScaleY(1);
+		});
+		discordView.setOnMouseEntered((MouseEvent t) -> {
+			discordView.setScaleX(1.25);
+			discordView.setScaleY(1.25);
+		});
+		youtubeView.setOnMouseExited((MouseEvent t) -> {
+			youtubeView.setScaleX(1);
+			youtubeView.setScaleY(1);
+		});
+		youtubeView.setOnMouseEntered((MouseEvent t) -> {
+			youtubeView.setScaleX(1.25);
+			youtubeView.setScaleY(1.25);
+		});
+		skinView.setOnMouseExited((MouseEvent t) -> {
+			skinView.setScaleX(1);
+			skinView.setScaleY(1);
+		});
+		profileView1.setOnMouseEntered((MouseEvent t) -> {
+			profileView1.setScaleX(1.25);
+			profileView1.setScaleY(1.25);
+		});
+		profileView2.setOnMouseEntered((MouseEvent t) -> {
+			profileView2.setScaleX(1.25);
+			profileView2.setScaleY(1.5);
+		});
+		profileView3.setOnMouseEntered((MouseEvent t) -> {
+			profileView3.setScaleX(1.25);
+			profileView3.setScaleY(1.25);
+		});
+		profileView4.setOnMouseEntered((MouseEvent t) -> {
+			profileView4.setScaleX(1.25);
+			profileView4.setScaleY(1.25);
+		});
+		profileView5.setOnMouseEntered((MouseEvent t) -> {
+			profileView5.setScaleX(1.25);
+			profileView5.setScaleY(1.25);
+		});
+		profileView6.setOnMouseEntered((MouseEvent t) -> {
+			profileView6.setScaleX(1.25);
+			profileView6.setScaleY(1.25);
+		});
+		profileView1.setOnMouseExited((MouseEvent t) -> {
+			profileView1.setScaleX(1);
+			profileView1.setScaleY(1);
+		});
+		profileView2.setOnMouseExited((MouseEvent t) -> {
+			profileView2.setScaleX(1);
+			profileView2.setScaleY(1);
+		});
+		profileView3.setOnMouseExited((MouseEvent t) -> {
+			profileView3.setScaleX(1);
+			profileView3.setScaleY(1);
+		});
+		profileView4.setOnMouseExited((MouseEvent t) -> {
+			profileView4.setScaleX(1);
+			profileView4.setScaleY(1);
+		});
+		profileView5.setOnMouseExited((MouseEvent t) -> {
+			profileView5.setScaleX(1);
+			profileView5.setScaleY(1);
+		});
+		profileView6.setOnMouseExited((MouseEvent t) -> {
+			profileView6.setScaleX(1);
+			profileView6.setScaleY(1);
+		});
 		versionSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
 
 			versionLabel.setText(
@@ -606,6 +723,39 @@ public class Controller
 			createNewProfile();
 		});
 
+		twitterView.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+			 try {
+				Desktop.getDesktop().browse(new URI("https://www.twitter.com/azurpixel"));
+			} catch (IOException | URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		facebookView.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+			 try {
+				Desktop.getDesktop().browse(new URI("https://www.facebook.com/azurpixel"));
+			} catch (IOException | URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		discordView.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+			 try {
+				Desktop.getDesktop().browse(new URI("https://www.discord.gg/azurpixel"));
+			} catch (IOException | URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		youtubeView.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+			 try {
+				Desktop.getDesktop().browse(new URI("https://www.azurpixel.net"));
+			} catch (IOException | URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		
 		profileView1.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
 			System.out.println("Loading profile " + profileList[1]);
 			tweaks = new Saver(new File(dir, "/profiles/AzurPixel.properties"));
@@ -719,10 +869,10 @@ public class Controller
 	private void settingsState() {
 		if (!settingsPane.isVisible()) {
 			settingsPane.setVisible(true);
-			userPane.setVisible(false);
+			profilesPane.setVisible(false);
 		} else {
 			settingsPane.setVisible(false);
-			userPane.setVisible(true);
+			profilesPane.setVisible(true);
 		}
 	}
 
@@ -842,6 +992,24 @@ public class Controller
 		}.start();
 	}
 
+	private void showTips() {
+		new Thread("Tips Updater") {
+			int t = 0;
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						Platform.runLater(() -> tipsLabel.setText("Tips: " + tipsList[t++]));
+						Thread.sleep(5000);
+						if (t == tipsList.length)
+							t = 0;
+					} catch (InterruptedException e) {
+					}
+				}
+			}
+		}.start();
+	}
+
 	@FXML
 	private void appExit() {
 		System.exit(0);
@@ -858,6 +1026,8 @@ public class Controller
 			english();
 		tweaks = backup;
 		setInfoText(langS, 1, 1800);
+		Platform.runLater(() -> copyrightLabel.setText(copyright));
+		Platform.runLater(() -> copyrightLabel.setText(success));
 		versionLabel.setText(versionBase.replaceFirst("1.", "") + tweaks.get("version", "1.8"));
 		memoryLabel.setText(memoryBase + tweaks.get("memory", "1024") + " mb");
 		graphicsLabel.setText(graphicsBase + tweaks.get("graphics", "Medium"));
@@ -883,11 +1053,12 @@ public class Controller
 		checkE = "Vérification des fichiers terminée";
 		starting = "Lancement du jeu en cours";
 		started = "Lancement terminé, amuse toi bien !";
-		download = "Téléchargemetn en cours: ";
+		download = "Téléchargement en cours: ";
+		success = "Succès";
 		connected = "Connecté en tant que ";
 		onlineText = " joueurs connectés";
+		copyright = "AzurLauncheur© Développé par Swanndolia";
 		nameField.setText(nameField.getText().replace("Login as", "Connecté en tant que"));
-
 		String[] IUsername = { "Erreur de connexion,", "Nom d'utilisateur invalide",
 				"utilisez uniquement entre 3 et 20", "caractères alpha numériques" };
 		String[] IForms = { "Erreur de connexion,", "Champs invalides,", "en crack ne remplissez que le premier champ,",
@@ -898,8 +1069,9 @@ public class Controller
 				"appuyez sur échap pour ouvrir la console", "puis envoyez nous une capture d'écran" };
 		String[] loginE = { "Erreur de connexion,", "Merci de rapporter cette erreur,",
 				"appuyez sur échap pour ouvrir la console", "puis envoyez nous une capture d'écran" };
-		String[] EFile = { "Erreur de fichiers,", "Merci de rapporter cette erreur,", "appuyez sur échap pour ouvrir la console",
-		"puis envoyez nous une capture d'écran" };
+		String[] EFile = { "Erreur de fichiers,", "Merci de rapporter cette erreur,",
+				"appuyez sur échap pour ouvrir la console", "puis envoyez nous une capture d'écran" };
+		String[] tipsList = { "Vous  pouvez sauvegardez un profil en cliquant sur votre skin", "Vos informations ne seront jamais utilisées ou vendues" };
 		String[] loginI = { "Connexion en cours,", "Veuillez patienter" };
 		String[] loginS = { "Connexion réussie", "Bienvenue " };
 		String[] loginRS = { "Connexion réussie", "Bienvenue " };
@@ -908,6 +1080,7 @@ public class Controller
 		this.IUsername = IUsername;
 		this.IForms = IForms;
 		this.IMail = IMail;
+		this.tipsList = tipsList;
 		this.ELaunch = ELaunch;
 		this.loginE = loginE;
 		this.loginI = loginI;
@@ -934,15 +1107,18 @@ public class Controller
 		optifineCheck.setText("Enable Optifine");
 		checkS = "File check in progress";
 		checkE = "File check finished";
+		success = "Achievements";
 		starting = "Starting the game";
 		started = "Here you go, Have fun !";
 		download = "Download in progress: ";
 		connected = "Login as ";
 		onlineText = " players online";
+		copyright = "AzurLauncher© Made by Swanndolia";
 		nameField.setText(nameField.getText().replace("Connecté en tant que", "Login as"));
 
 		String[] IUsername = { "Login Error,", "Invalid username", "you should use only alphanumeric",
 				"between 3 and 20 characters lenght" };
+		String[] tipsList = { "You can save a profile by clicking on your skin", "We never use or sell your informations" };
 		String[] IForms = { "Login Error,", "Invalids forms,", "type only a username to Login as crack,",
 				"or use your mojang email and password." };
 		String[] IMail = { "Login Error,", "Incorrect mail or password,", "if you don't have mojang account,",
@@ -962,6 +1138,7 @@ public class Controller
 		this.IForms = IForms;
 		this.IMail = IMail;
 		this.ELaunch = ELaunch;
+		this.tipsList = tipsList;
 		this.loginE = loginE;
 		this.loginI = loginI;
 		this.loginS = loginS;

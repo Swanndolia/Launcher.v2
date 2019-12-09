@@ -104,15 +104,15 @@
 	-fx-background-color: linear-gradient(to top left, #000000, #020001, #030002, #030004, #030006, #030007, #030009, #02000a, #04000a, #06000a, #08000a, #0a000a);
 }
 
+
 #newsPane {
-	-fx-background-radius: 0 0 45 45;
+	-fx-background-radius: 20 20 20 20;
 	-fx-background-color: rgba(200, 200, 200, 0.025);
-	-fx-border-radius: 0 0 45 45;
+	-fx-border-radius: 20 20 20 20;
 	-fx-border-color: linear-gradient(to right top, #683552, #6d3760, #6e3b70, #6b4182, #614895, #4f53a1, #365daa, #0067b0, #0071a8, #007799, #007b88, #2f7d78);
     -fx-border-width: 0.4;
 }
 #newsPane:hover {
-	-fx-background-radius: 0 0 45 45;
 	-fx-background-color: rgba(200, 200, 200, 0.03);
 	-fx-border-color: linear-gradient(to right top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
 }
@@ -125,8 +125,6 @@
     -fx-border-width: 0.4;
 }
 #navPane:hover {
-	-fx-background-radius: 45 45 0 0;
-	-fx-background-color: rgba(200, 200, 200, 0.03);
 	-fx-border-color: linear-gradient(to right top, #d16ba5, #ca6eb3, #c173c0, #b578cd, #a57ed9, #8e8eea, #709cf7, #4aaaff, #00c1ff, #00d7ff, #01eafd, #5ffbf1);
 }
 

@@ -105,14 +105,13 @@
 }
 
 #newsPane {
-	-fx-background-radius: 0 0 45 45;
+	-fx-background-radius: 45 45 45 45;
 	-fx-background-color: rgba(120, 111, 166, 0.125);
-	-fx-border-radius: 0 0 45 45;
+	-fx-border-radius: 45 45 45 45;
 	-fx-border-color: #57606f;
     -fx-border-width: 0.4;
 }
 #newsPane:hover {
-	-fx-background-radius: 0 0 45 45;
 	-fx-background-color: rgba(120, 111, 166, 0.15);
 	-fx-border-color: #57606f;
 }

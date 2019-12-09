@@ -4,6 +4,7 @@
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
+<?import javafx.scene.web.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.Image?>
@@ -32,7 +33,7 @@
     </ImageView>
   </AnchorPane>
 
-  <AnchorPane fx:id="userPane" id="settingsPane" prefHeight="370" prefWidth="470" layoutX="50" layoutY="230" >
+  <AnchorPane fx:id="profilesPane" id="settingsPane" prefHeight="370" prefWidth="470" layoutX="50" layoutY="230" >
     <ImageView fx:id="profileView1" layoutX="20" layoutY="10" pickOnBounds="true" preserveRatio="true" visible="false" >
      <Image fx:id="profile1" url="@noImage"/>
     </ImageView>
@@ -70,20 +71,31 @@
     <Button fx:id="optifineCheck" id="boxChecked" layoutX="230" layoutY="300" onAction="#optifineState" />
   </AnchorPane>
 
-  <AnchorPane fx:id="navPane" id="navPane" prefHeight="45" prefWidth="700" layoutX="550" layoutY="50.0">
-
+  <AnchorPane id="newsPane" prefHeight="50" prefWidth="700.0" layoutX="550" layoutY="60.0">
+    <Label fx:id="tipsLabel" id="settingsLabel" prefWidth="700" layoutY="13" alignment="center" />
+  </AnchorPane>
+  
+  <AnchorPane id="newsPane" prefHeight="100" prefWidth="700.0" layoutX="550" layoutY="120.0">
+    <ImageView fx:id="discordView" layoutX="70" layoutY="2" pickOnBounds="true" preserveRatio="true">
+     <Image url="@discord.png"/>
+    </ImageView>
+    <ImageView fx:id="twitterView" layoutX="220" layoutY="2" pickOnBounds="true" preserveRatio="true">
+     <Image url="@twitter.png"/>
+    </ImageView>
+    <ImageView fx:id="facebookView" layoutX="370" layoutY="2" pickOnBounds="true" preserveRatio="true">
+     <Image url="@facebook.png"/>
+    </ImageView>
+    <ImageView fx:id="youtubeView" layoutX="520" layoutY="2" pickOnBounds="true" preserveRatio="true">
+     <Image url="@youtube.png"/>
+    </ImageView>
+  </AnchorPane>
+  
+  <AnchorPane id="newsPane" prefHeight="370" prefWidth="700.0" layoutX="550" layoutY="230.0">
+    <Label fx:id="successLabel" id="settingsLabel" prefWidth="700" layoutY="20" alignment="center" />
   </AnchorPane>
 
-  <AnchorPane fx:id="newsPane" id="newsPane" prefHeight="505" prefWidth="700.0" layoutX="550" layoutY="95.0">
-
-  </AnchorPane>
-
-  <AnchorPane fx:id="idkWhatPane" id="newsPane" prefHeight="505" prefWidth="700.0" layoutX="550" layoutY="95.0" visible="false">
-
-  </AnchorPane>
-
-  <AnchorPane fx:id="footerPane" id="footerPane" prefHeight="70" prefWidth="1300" layoutY="630" >
- 
+  <AnchorPane id="footerPane" prefHeight="70" prefWidth="1300" layoutY="630" >
+ 	<Label fx:id="copyrightLabel"  prefWidth="500" layoutY="27" layoutX="400" alignment="center" />
   </AnchorPane>
 
 </AnchorPane>
