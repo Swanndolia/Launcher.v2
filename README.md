@@ -1,3 +1,5 @@
+Thanks to @litarvan for some launcher libs
+
 # Launcher-v2
 Optimized launcher with dynamic theme loading, support for 1.7 to 1.14 (integrated with optifine) version, integrated graphics presets for minecraft, anti hack, sessions saver, profile saver (and multiple sessions can be saved together and settings (version ram controls graphics) are saved per profile too, nice and clean UI, auto connect to server (you can chose to which one), ping indicator and connected players on the selected server.
 
